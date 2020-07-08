@@ -14,16 +14,16 @@ import java.util.Properties;
 public class MailService {
 
     private static final String SMTP_HOST = "smtp.gmail.com";
-    private static final String SMTP_PORT = "465";
+    private static final String SMTP_PORT = "587";
     private static final String TEMPLATE_MESSAGE = "Hello,\n\nThere's a new message for you:\n%s";
     private static final String MESSAGE_SUBJECT = "Advisor service Info";
 
-    @Value("${mail-service.test-address}")
-    private String TO;
     @Value("${mail-service.email.address}")
     private String MAIL_SERVICE_EMAIL_ADDRESS;
     @Value("${mail-service.email.password}")
     private String MAIL_SERVICE_EMAIL_PASSWORD;
+    @Value("${mail-service.test-address}")
+    private String TO;
 
     public void sendEmailMessage(String emailMessage) {
         Properties properties = getProperties();
@@ -53,8 +53,7 @@ public class MailService {
         properties.put("mail.smtp.host", SMTP_HOST);
         properties.put("mail.smtp.port", SMTP_PORT);
         properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.socketFactory.port", SMTP_PORT);
-        properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        properties.put("mail.smtp.starttls.enable", "true");
         return properties;
     }
 
