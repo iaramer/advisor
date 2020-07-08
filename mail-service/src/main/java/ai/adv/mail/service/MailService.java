@@ -1,53 +1,69 @@
 package ai.adv.mail.service;
 
-import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
+import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
 @Service
-@RequiredArgsConstructor
+@Slf4j
 public class MailService {
 
-    private final static String HOST = "localhost";
+    private static final String SMTP_HOST = "smtp.gmail.com";
+    private static final String SMTP_PORT = "465";
+    private static final String TEMPLATE_MESSAGE = "Hello,\n\nThere's a new message for you:\n%s";
+    private static final String MESSAGE_SUBJECT = "Advisor service Info";
 
-    @Value("#{environment.MAIL_SERVICE_TO}")
+    @Value("${mail-service.test-address}")
     private String TO;
-    @Value("#{environment.MAIL_SERVICE_EMAIL_ADDRESS}")
-    private String FROM;
+    @Value("${mail-service.email.address}")
+    private String MAIL_SERVICE_EMAIL_ADDRESS;
+    @Value("${mail-service.email.password}")
+    private String MAIL_SERVICE_EMAIL_PASSWORD;
 
-    @PostConstruct
-//    public void sendEmailMessage(String emailMessage) {
-    public void sendEmailMessage() {
+    public void sendEmailMessage(String emailMessage) {
+        Properties properties = getProperties();
+        Session session = getSession(properties);
 
-        //Get the session object
-        Properties properties = System.getProperties();
-        properties.setProperty("mail.smtp.host", HOST);
-
-        Session session = Session.getDefaultInstance(properties);
-
-        //compose the message
         try {
-            MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(FROM));
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(TO));
-            message.setSubject("Advisor service message");
-            message.setText("Hello, this is example of sending email");
-
-            // Send message
+            Message message = getMessage(emailMessage, session);
             Transport.send(message);
-            System.out.println("message sent successfully...");
-
-        } catch (MessagingException mex) {
-            mex.printStackTrace();
+            log.info("Message sent successfully");
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            log.error("An error occurred during message sending");
         }
+    }
+
+    private Session getSession(Properties properties) {
+        return Session.getInstance(properties, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(MAIL_SERVICE_EMAIL_ADDRESS, MAIL_SERVICE_EMAIL_PASSWORD);
+            }
+        });
+    }
+
+    private Properties getProperties() {
+        Properties properties = new Properties();
+        properties.put("mail.smtp.host", SMTP_HOST);
+        properties.put("mail.smtp.port", SMTP_PORT);
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.socketFactory.port", SMTP_PORT);
+        properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        return properties;
+    }
+
+    private Message getMessage(String emailMessage, Session session) throws MessagingException {
+        Message message = new MimeMessage(session);
+        message.setFrom(new InternetAddress(MAIL_SERVICE_EMAIL_ADDRESS));
+        message.addRecipient(Message.RecipientType.TO, new InternetAddress(TO));
+        message.setSubject(MESSAGE_SUBJECT);
+        message.setText(String.format(TEMPLATE_MESSAGE, emailMessage));
+        return message;
     }
 }

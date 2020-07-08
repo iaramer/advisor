@@ -15,3 +15,9 @@ spring:
       bootstrap-servers: localhost:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+mail-service:
+    email:
+      address: ${MAIL_SERVICE_EMAIL_ADDRESS}
+      password: ${MAIL_SERVICE_EMAIL_PASSWORD}
+    test-address: ${MAIL_SERVICE_TEST_ADDRESS}
