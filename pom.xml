@@ -6,7 +6,7 @@
     <modules>
         <module>mail-service</module>
         <module>data-service</module>
-        <module>portfolio-balancing-service</module>
+        <module>portfolio-manager-service</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

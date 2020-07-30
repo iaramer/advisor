@@ -9,7 +9,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>portfolio-balancing-service</artifactId>
+  <artifactId>portfolio-manager-service</artifactId>
 
 
 </project>
