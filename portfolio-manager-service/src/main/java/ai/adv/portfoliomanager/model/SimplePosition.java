@@ -10,7 +10,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class SinglePosition implements Position {
+public class SimplePosition implements Position {
 
   private String ticker;
 
