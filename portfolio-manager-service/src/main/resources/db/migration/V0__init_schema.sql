@@ -1,33 +1,31 @@
 CREATE TABLE portfolios
 (
-    id   SERIAL UNIQUE,
+    uuid UUID UNIQUE,
     name VARCHAR(64) NOT NULL,
-    PRIMARY KEY (id)
-);
-
-CREATE TABLE simple_positions
-(
-    id                         SERIAL UNIQUE,
-    portfolio_id               INT        NOT NULL,
-    parent_complex_position_id INT,
-    ticker                     VARCHAR(8) NOT NULL,
-    size                       INT,
-
-    PRIMARY KEY (id),
-    FOREIGN KEY (portfolio_id) REFERENCES portfolios (id),
-    FOREIGN KEY (parent_complex_position_id) REFERENCES complex_positions (id),
-    CHECK (size > 0)
+    PRIMARY KEY (uuid)
 );
 
 CREATE TABLE complex_positions
 (
-    id                         SERIAL UNIQUE,
-    portfolio_id               INT         NOT NULL,
-    parent_complex_position_id INT,
-    description                VARCHAR(64) NOT NULL,
+    uuid                         UUID UNIQUE,
+    portfolio_uuid               UUID        NOT NULL,
+    parent_complex_position_uuid UUID,
+    description                  VARCHAR(64) NOT NULL,
 
-    PRIMARY KEY (id),
-    FOREIGN KEY (portfolio_id) REFERENCES portfolios (id)
+    PRIMARY KEY (uuid),
+    FOREIGN KEY (portfolio_uuid) REFERENCES portfolios (uuid)
 );
 
--- Change all ids to UUID
+CREATE TABLE simple_positions
+(
+    uuid                         UUID UNIQUE,
+    portfolio_uuid               UUID       NOT NULL,
+    parent_complex_position_uuid UUID,
+    ticker                       VARCHAR(8) NOT NULL,
+    size                         INT,
+
+    PRIMARY KEY (uuid),
+    CONSTRAINT check_size CHECK (size > 0),
+    FOREIGN KEY (portfolio_uuid) REFERENCES portfolios (uuid),
+    FOREIGN KEY (parent_complex_position_uuid) REFERENCES complex_positions (uuid)
+);
