@@ -8,8 +8,7 @@ import lombok.Setter;
 @Setter
 public class Portfolio {
 
-  /**
-   * Collection with positions
-   */
+  private String name;
+
   private List<Position> positions;
 }
