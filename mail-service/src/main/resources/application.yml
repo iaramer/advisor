@@ -1,0 +1,24 @@
+server:
+  port: 8081
+
+spring:
+  profiles:
+    active: default
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: group_id
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+mail-service:
+  active: true # todo: add functionality to turn off messaging
+  email:
+    address: ${MAIL_SERVICE_EMAIL_ADDRESS}
+    password: ${MAIL_SERVICE_EMAIL_PASSWORD}
+  test-address: ${MAIL_SERVICE_TEST_ADDRESS}

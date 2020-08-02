@@ -6,6 +6,7 @@
     <modules>
         <module>mail-service</module>
         <module>data-service</module>
+        <module>portfolio-manager-service</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -21,9 +22,12 @@
 
     <properties>
         <java.version>14</java.version>
+        <flyway-core.version>6.5.3</flyway-core.version>
     </properties>
 
     <dependencies>
+
+        <!-- Spring dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jdbc</artifactId>
@@ -32,7 +36,18 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+            <version>2.5.0.RELEASE</version>
+        </dependency>
 
+        <!-- Other dependencies -->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.7</version>
+        </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -43,6 +58,12 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>jsr305</artifactId>
+            <version>3.0.2</version>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
