@@ -22,6 +22,7 @@
 
     <properties>
         <java.version>14</java.version>
+        <flyway-core.version>6.5.3</flyway-core.version>
     </properties>
 
     <dependencies>
@@ -56,6 +57,11 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>jsr305</artifactId>
+            <version>3.0.2</version>
         </dependency>
 
         <dependency>

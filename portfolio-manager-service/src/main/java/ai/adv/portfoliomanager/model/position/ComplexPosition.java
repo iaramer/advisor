@@ -1,4 +1,4 @@
-package ai.adv.portfoliomanager.model;
+package ai.adv.portfoliomanager.model.position;
 
 import java.util.List;
 import lombok.Getter;

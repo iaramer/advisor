@@ -1,4 +1,4 @@
-package ai.adv.portfoliomanager.model;
+package ai.adv.portfoliomanager.model.position;
 
 /**
  * Interface, which describes a position or allocation in portfolio
