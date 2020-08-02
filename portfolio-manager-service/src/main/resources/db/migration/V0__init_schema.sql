@@ -1,7 +1,10 @@
 CREATE TABLE portfolios
 (
-    uuid UUID UNIQUE,
-    name VARCHAR(64) NOT NULL,
+    uuid          UUID UNIQUE,
+    is_model      BOOLEAN,
+    base_currency VARCHAR(8),
+    name          VARCHAR(64) NOT NULL,
+
     PRIMARY KEY (uuid)
 );
 
@@ -16,7 +19,7 @@ CREATE TABLE complex_positions
     FOREIGN KEY (portfolio_uuid) REFERENCES portfolios (uuid)
 );
 
-CREATE TABLE simple_positions
+CREATE TABLE client_simple_positions
 (
     uuid                         UUID UNIQUE,
     portfolio_uuid               UUID       NOT NULL,

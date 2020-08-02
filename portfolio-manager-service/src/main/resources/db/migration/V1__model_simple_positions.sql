@@ -1,6 +1,3 @@
-ALTER TABLE IF EXISTS model_portfolios
-    ADD COLUMN is_model BOOLEAN;
-
 CREATE TABLE model_simple_positions
 (
     uuid                         UUID UNIQUE,

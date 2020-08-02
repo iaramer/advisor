@@ -1,5 +1,6 @@
 package ai.adv.portfoliomanager.dto;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,7 +9,7 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-public class ComplexPositionDto {
+public class ClientSimplePositionDto {
 
   private UUID uuid;
 
@@ -16,5 +17,7 @@ public class ComplexPositionDto {
 
   private UUID parentComplexPositionUuid;
 
-  private String description;
+  private String ticker;
+
+  private BigDecimal share;
 }

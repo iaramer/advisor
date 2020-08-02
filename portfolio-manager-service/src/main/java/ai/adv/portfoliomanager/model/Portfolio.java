@@ -1,4 +1,4 @@
-package ai.adv.portfoliomanager.model.portfolio;
+package ai.adv.portfoliomanager.model;
 
 import ai.adv.portfoliomanager.model.position.Position;
 import java.util.List;
@@ -7,9 +7,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public abstract class AbstractPortfolio implements Portfolio {
+public class Portfolio {
 
   private String name;
+
+  private boolean isModel;
 
   private String baseCurrency = "USD";
 

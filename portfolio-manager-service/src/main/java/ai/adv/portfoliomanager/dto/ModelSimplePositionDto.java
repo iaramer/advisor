@@ -1,19 +1,20 @@
 package ai.adv.portfoliomanager.dto;
 
+import java.util.UUID;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-@Builder
 @Getter
 @Setter
-public class SimplePositionDto {
+@Builder
+public class ModelSimplePositionDto {
 
-  private int id;
+  private UUID uuid;
 
-  private int portfolioId;
+  private UUID portfolioUuid;
 
-  private int parentComplexPositionId;
+  private UUID parentComplexPositionUuid;
 
   private String ticker;
 
