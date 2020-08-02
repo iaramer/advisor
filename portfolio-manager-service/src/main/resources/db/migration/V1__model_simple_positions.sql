@@ -1,6 +1,6 @@
 CREATE TABLE model_simple_positions
 (
-    uuid                         UUID UNIQUE,
+    uuid                         UUID UNIQUE DEFAULT uuid_generate_v4(),
     portfolio_uuid               UUID       NOT NULL,
     parent_complex_position_uuid UUID,
     ticker                       VARCHAR(8) NOT NULL,

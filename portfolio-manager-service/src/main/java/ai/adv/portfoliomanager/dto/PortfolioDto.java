@@ -12,9 +12,9 @@ public class PortfolioDto {
 
   private UUID uuid;
 
+  private String name;
+
   private boolean isModel;
 
   private String baseCurrency;
-
-  private String name;
 }
