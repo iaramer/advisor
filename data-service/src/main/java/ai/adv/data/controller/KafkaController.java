@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class KafkaController {
 
-    private final KafkaProducerService kafkaProducerService;
+  private final KafkaProducerService kafkaProducerService;
 
-    @PostMapping(value = "/publish")
-    public void sendMessageToKafkaTopic(@RequestParam("message") String message) {
-        kafkaProducerService.sendMessage(message);
-    }
+  @PostMapping(value = "/publish")
+  public void sendMessageToKafkaTopic(@RequestParam("message") String message) {
+    kafkaProducerService.sendMessage(message);
+  }
 }

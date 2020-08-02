@@ -10,12 +10,12 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class KafkaProducerService {
 
-    private static final String TOPIC = "stocks";
+  private static final String TOPIC = "stocks";
 
-    private final KafkaTemplate<String, String> kafkaTemplate;
+  private final KafkaTemplate<String, String> kafkaTemplate;
 
-    public void sendMessage(String message) {
-        log.info(String.format("#### -> Producing message -> %s", message));
-        kafkaTemplate.send(TOPIC, message);
-    }
+  public void sendMessage(String message) {
+    log.info(String.format("#### -> Producing message -> %s", message));
+    kafkaTemplate.send(TOPIC, message);
+  }
 }
