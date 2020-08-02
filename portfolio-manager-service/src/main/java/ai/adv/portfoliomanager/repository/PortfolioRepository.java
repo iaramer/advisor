@@ -18,15 +18,17 @@ public class PortfolioRepository {
     this.jdbcTemplate = new JdbcTemplate(dataSource);
   }
 
-  public void create(PortfolioDto portfolioDto) {
-
-    String sqlQuery = "INSERT INTO portfolios(name) VALUES ('Portfolio name')";
-    jdbcTemplate.update(sqlQuery);
+  public void save(PortfolioDto portfolioDto) {
+    String sqlQuery = "INSERT INTO portfolios(name, is_model, base_currency) "
+        + "VALUES (?, ?, ?)";
+    jdbcTemplate.update(sqlQuery,
+        portfolioDto.getName(),
+        portfolioDto.isModel(),
+        portfolioDto.getBaseCurrency());
   }
 
   public List<PortfolioDto> getAllPortfolios() {
-
-    String sqlQuery = "SELECT id, name FROM portfolios";
+    String sqlQuery = "SELECT uuid, name, is_model, base_currency FROM portfolios";
     return jdbcTemplate.query(sqlQuery, new PortfolioMapper());
   }
 }
