@@ -1,5 +1,6 @@
 package ai.adv.portfoliomanager.model.position;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +11,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@Builder
 public class ClientSimplePosition implements Position {
 
   private String ticker;
