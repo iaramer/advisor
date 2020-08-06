@@ -1,7 +1,9 @@
 package ai.adv.portfoliomanager.model;
 
 import ai.adv.portfoliomanager.model.position.Position;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,4 +23,11 @@ public class Portfolio {
   private String baseCurrency = DEFAULT_BASE_CURRENCY;
 
   private List<Position> positions;
+
+  public List<String> getTickers() {
+    return positions.stream()
+        .map(Position::getTickers)
+        .flatMap(Collection::stream)
+        .collect(Collectors.toList());
+  }
 }
