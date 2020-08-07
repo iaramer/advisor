@@ -1,6 +1,7 @@
 package ai.adv.portfoliomanager.model.position;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Interface, which describes a position or allocation in portfolio
@@ -8,4 +9,6 @@ import java.util.List;
 public interface Position {
 
   List<String> getTickers();
+
+  Map<String, Integer> getSharesWithNumbers();
 }

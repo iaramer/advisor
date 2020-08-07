@@ -1,8 +1,10 @@
 package ai.adv.portfoliomanager.model.position;
 
+import ai.adv.portfoliomanager.exception.OperationNotSupportedException;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,5 +21,10 @@ public class ModelSimplePosition implements Position {
   @Override
   public List<String> getTickers() {
     return Collections.singletonList(ticker);
+  }
+
+  @Override
+  public Map<String, Integer> getSharesWithNumbers() {
+    throw new OperationNotSupportedException("Model portfolio can't have size");
   }
 }
