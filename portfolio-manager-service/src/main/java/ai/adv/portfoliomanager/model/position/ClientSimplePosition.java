@@ -2,6 +2,7 @@ package ai.adv.portfoliomanager.model.position;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,5 +24,10 @@ public class ClientSimplePosition implements Position {
   @Override
   public List<String> getTickers() {
     return Collections.singletonList(ticker);
+  }
+
+  @Override
+  public Map<String, Integer> getSharesWithNumbers() {
+    return Collections.singletonMap(ticker, size);
   }
 }

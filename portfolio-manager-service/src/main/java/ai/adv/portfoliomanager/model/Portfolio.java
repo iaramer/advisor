@@ -3,6 +3,8 @@ package ai.adv.portfoliomanager.model;
 import ai.adv.portfoliomanager.model.position.Position;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,5 +31,12 @@ public class Portfolio {
         .map(Position::getTickers)
         .flatMap(Collection::stream)
         .collect(Collectors.toList());
+  }
+
+  public Map<String, Integer> getSharesWithNumbers() {
+    return positions.stream()
+        .map(Position::getSharesWithNumbers)
+        .flatMap(position -> position.entrySet().stream())
+        .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
   }
 }
