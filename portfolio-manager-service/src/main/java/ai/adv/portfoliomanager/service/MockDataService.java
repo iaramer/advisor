@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Deprecated
 public class MockDataService {
 
   private static final Map<String, BigDecimal> pricesOfPortfolioShares = new HashMap<>();
