@@ -1,5 +1,6 @@
 package ai.adv.portfoliomanager.model.position;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +19,7 @@ public class ComplexPosition implements Position {
 
   private String description;
 
-  private List<Position> positions;
+  private List<Position> positions = new ArrayList<>();
 
   @Override
   public List<String> getTickers() {
@@ -34,5 +35,9 @@ public class ComplexPosition implements Position {
         .map(Position::getSharesWithNumbers)
         .flatMap(position -> position.entrySet().stream())
         .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
+  }
+
+  public void addPosition(Position position) {
+    positions.add(position);
   }
 }
