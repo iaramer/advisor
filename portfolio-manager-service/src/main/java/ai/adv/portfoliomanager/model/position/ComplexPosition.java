@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,6 +20,7 @@ public class ComplexPosition implements Position {
 
   private String description;
 
+  @Getter(AccessLevel.NONE)
   private List<Position> positions = new ArrayList<>();
 
   @Override
@@ -39,5 +41,13 @@ public class ComplexPosition implements Position {
 
   public void addPosition(Position position) {
     positions.add(position);
+  }
+
+  @Override
+  public List<Position> getPositions() {
+    return positions.stream()
+        .map(Position::getPositions)
+        .flatMap(Collection::stream)
+        .collect(Collectors.toList());
   }
 }

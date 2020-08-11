@@ -11,4 +11,7 @@ public interface Position {
   List<String> getTickers();
 
   Map<String, Integer> getSharesWithNumbers();
+
+  List<Position> getPositions();
+
 }

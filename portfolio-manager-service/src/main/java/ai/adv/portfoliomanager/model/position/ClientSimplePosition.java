@@ -30,4 +30,9 @@ public class ClientSimplePosition implements Position {
   public Map<String, Integer> getSharesWithNumbers() {
     return Collections.singletonMap(ticker, size);
   }
+
+  @Override
+  public List<Position> getPositions() {
+    return Collections.singletonList(this);
+  }
 }
