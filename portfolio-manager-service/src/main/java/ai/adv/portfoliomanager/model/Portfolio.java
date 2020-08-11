@@ -1,6 +1,7 @@
 package ai.adv.portfoliomanager.model;
 
 import ai.adv.portfoliomanager.model.position.Position;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +25,13 @@ public class Portfolio {
   @Builder.Default
   private String baseCurrency = DEFAULT_BASE_CURRENCY;
 
-  private List<Position> positions;
+  @Builder.Default
+  private List<Position> positions = new ArrayList<>();
+
+  public static Portfolio empty() {
+    return Portfolio.builder()
+        .build();
+  }
 
   public List<String> getTickers() {
     return positions.stream()
