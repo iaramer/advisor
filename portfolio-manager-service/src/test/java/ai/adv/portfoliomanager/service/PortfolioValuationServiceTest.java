@@ -30,18 +30,16 @@ class PortfolioValuationServiceTest {
     Map<String, BigDecimal> emptySharesPrices = Collections.emptyMap();
     Portfolio portfolio = Portfolio.empty();
 
-    Assertions.assertThrows(IllegalArgumentException.class, () -> {
-      portfolioValuationService.getPortfolioValue(portfolio, emptySharesPrices);
-    });
+    Assertions.assertThrows(IllegalArgumentException.class,
+        () -> portfolioValuationService.getPortfolioValue(portfolio, emptySharesPrices));
   }
 
   @Test
   void getPortfolioValue_ModelPortfolio_UnsupportedOperationException() {
-    Portfolio modelPortfolio = TestUtils.getTestModelPortfolio();
+    Portfolio modelPortfolio = TestUtils.getTestModelPortfolioOnlySimplePositions();
 
-    Assertions.assertThrows(UnsupportedOperationException.class, () -> {
-      portfolioValuationService.getPortfolioValue(modelPortfolio, sharesPrices);
-    });
+    Assertions.assertThrows(UnsupportedOperationException.class,
+        () -> portfolioValuationService.getPortfolioValue(modelPortfolio, sharesPrices));
   }
 
   @Test
