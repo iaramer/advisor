@@ -26,4 +26,9 @@ public class ModelSimplePosition implements Position {
   public Map<String, Integer> getSharesWithNumbers() {
     throw new UnsupportedOperationException("Model portfolio can't have size");
   }
+
+  @Override
+  public List<Position> getPositions() {
+    return Collections.singletonList(this);
+  }
 }

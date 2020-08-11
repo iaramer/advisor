@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,12 +26,20 @@ public class Portfolio {
   @Builder.Default
   private String baseCurrency = DEFAULT_BASE_CURRENCY;
 
+  @Getter(AccessLevel.NONE)
   @Builder.Default
   private List<Position> positions = new ArrayList<>();
 
   public static Portfolio empty() {
     return Portfolio.builder()
         .build();
+  }
+
+  public List<Position> getPositions() {
+    return positions.stream()
+        .map(Position::getPositions)
+        .flatMap(Collection::stream)
+        .collect(Collectors.toList());
   }
 
   public List<String> getTickers() {
