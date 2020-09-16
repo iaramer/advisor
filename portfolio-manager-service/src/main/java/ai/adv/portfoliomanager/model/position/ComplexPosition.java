@@ -1,5 +1,6 @@
 package ai.adv.portfoliomanager.model.position;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -32,7 +33,7 @@ public class ComplexPosition implements Position {
   }
 
   @Override
-  public Map<String, Integer> getSharesWithNumbers() {
+  public Map<String, BigDecimal> getSharesWithNumbers() {
     return positions.stream()
         .map(Position::getSharesWithNumbers)
         .flatMap(position -> position.entrySet().stream())
@@ -49,5 +50,13 @@ public class ComplexPosition implements Position {
         .map(Position::getPositions)
         .flatMap(Collection::stream)
         .collect(Collectors.toList());
+  }
+
+  @Override
+  public BigDecimal getPositionValue(BigDecimal price) {
+    return positions.stream()
+        .map(position -> position.getPositionValue(price))
+        .reduce(BigDecimal::add)
+        .orElse(BigDecimal.ZERO);
   }
 }

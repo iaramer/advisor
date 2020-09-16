@@ -23,8 +23,13 @@ public class ModelSimplePosition implements Position {
   }
 
   @Override
-  public Map<String, Integer> getSharesWithNumbers() {
+  public Map<String, BigDecimal> getSharesWithNumbers() {
     throw new UnsupportedOperationException("Model portfolio can't have size");
+  }
+
+  @Override
+  public BigDecimal getPositionValue(BigDecimal price) {
+    throw new UnsupportedOperationException("Model portfolio can't have value");
   }
 
   @Override
