@@ -15,6 +15,7 @@ public class ClientCashPosition implements Position {
 
   private String ticker;
   private BigDecimal size;
+  private PositionType positionType;
 
   @Override
   public List<String> getTickers() {

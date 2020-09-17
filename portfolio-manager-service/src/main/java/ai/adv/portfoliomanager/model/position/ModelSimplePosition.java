@@ -14,8 +14,8 @@ import lombok.Setter;
 public class ModelSimplePosition implements Position {
 
   private String ticker;
-
   private BigDecimal proportion;
+  private PositionType positionType;
 
   @Override
   public List<String> getTickers() {

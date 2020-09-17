@@ -20,6 +20,7 @@ public class ClientSimplePosition implements Position {
 
   private String ticker;
   private int size;
+  private PositionType positionType;
 
   @Override
   public List<String> getTickers() {

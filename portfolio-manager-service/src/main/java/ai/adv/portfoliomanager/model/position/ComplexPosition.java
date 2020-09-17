@@ -20,9 +20,9 @@ import lombok.Setter;
 public class ComplexPosition implements Position {
 
   private String description;
-
   @Getter(AccessLevel.NONE)
   private List<Position> positions = new ArrayList<>();
+  private PositionType positionType;
 
   @Override
   public List<String> getTickers() {
