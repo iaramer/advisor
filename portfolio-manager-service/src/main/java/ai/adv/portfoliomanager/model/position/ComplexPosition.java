@@ -19,7 +19,7 @@ import lombok.Setter;
 @Setter
 public class ComplexPosition implements Position {
 
-  private String description;
+  private String name;
   @Getter(AccessLevel.NONE)
   private List<Position> positions = new ArrayList<>();
   private PositionType positionType;

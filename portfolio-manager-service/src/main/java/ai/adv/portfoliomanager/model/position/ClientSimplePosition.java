@@ -22,6 +22,10 @@ public class ClientSimplePosition implements Position {
   private int size;
   private PositionType positionType;
 
+  public void addSize(int additionalSize) {
+    size += additionalSize;
+  }
+
   @Override
   public List<String> getTickers() {
     return Collections.singletonList(ticker);

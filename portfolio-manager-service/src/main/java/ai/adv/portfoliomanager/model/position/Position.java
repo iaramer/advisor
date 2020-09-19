@@ -9,6 +9,8 @@ import java.util.Map;
  */
 public interface Position {
 
+  PositionType getPositionType();
+
   List<String> getTickers();
 
   Map<String, BigDecimal> getSharesWithNumbers();

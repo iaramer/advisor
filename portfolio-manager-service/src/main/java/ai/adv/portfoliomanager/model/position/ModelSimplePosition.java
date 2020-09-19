@@ -17,6 +17,14 @@ public class ModelSimplePosition implements Position {
   private BigDecimal proportion;
   private PositionType positionType;
 
+  public void addProportion(BigDecimal bigDecimal) {
+    BigDecimal newProportion = proportion.add(bigDecimal);
+    if (newProportion.compareTo(BigDecimal.ZERO) >= 0) {
+      throw new UnsupportedOperationException("A proportion of a position can't be higher than 100%");
+    }
+    proportion = newProportion;
+  }
+
   @Override
   public List<String> getTickers() {
     return Collections.singletonList(ticker);

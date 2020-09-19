@@ -11,9 +11,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class PortfolioValuationService {
 
   private static final String NO_PRICES_PROVIDED = "No prices provided";
