@@ -18,12 +18,18 @@ import lombok.Setter;
 @Builder
 public class ClientSimplePosition implements Position {
 
+  private static final PositionType POSITION_TYPE = PositionType.CLIENT_SIMPLE_POSITION;
+
   private String ticker;
   private int size;
-  private PositionType positionType;
 
   public void addSize(int additionalSize) {
     size += additionalSize;
+  }
+
+  @Override
+  public PositionType getPositionType() {
+    return POSITION_TYPE;
   }
 
   @Override

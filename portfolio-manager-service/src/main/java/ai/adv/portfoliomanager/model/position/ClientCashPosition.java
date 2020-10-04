@@ -13,9 +13,19 @@ import lombok.Setter;
 @Builder
 public class ClientCashPosition implements Position {
 
+  private static final PositionType POSITION_TYPE = PositionType.CLIENT_CASH_POSITION;
+
   private String ticker;
   private BigDecimal size;
-  private PositionType positionType;
+
+  public void addSize(BigDecimal additionalSize) {
+   size = size.add(additionalSize);
+  }
+
+  @Override
+  public PositionType getPositionType() {
+    return POSITION_TYPE;
+  }
 
   @Override
   public List<String> getTickers() {

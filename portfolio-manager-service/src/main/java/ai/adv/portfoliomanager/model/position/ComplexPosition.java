@@ -19,10 +19,16 @@ import lombok.Setter;
 @Setter
 public class ComplexPosition implements Position {
 
+  private static final PositionType POSITION_TYPE = PositionType.COMPLEX_POSITION;
+
   private String name;
   @Getter(AccessLevel.NONE)
   private List<Position> positions = new ArrayList<>();
-  private PositionType positionType;
+
+  @Override
+  public PositionType getPositionType() {
+    return POSITION_TYPE;
+  }
 
   @Override
   public List<String> getTickers() {

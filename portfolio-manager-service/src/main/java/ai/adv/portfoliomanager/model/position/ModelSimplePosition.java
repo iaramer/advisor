@@ -13,9 +13,10 @@ import lombok.Setter;
 @Builder
 public class ModelSimplePosition implements Position {
 
+  private static final PositionType POSITION_TYPE = PositionType.MODEL_SIMPLE_POSITION;
+
   private String ticker;
   private BigDecimal proportion;
-  private PositionType positionType;
 
   public void addProportion(BigDecimal bigDecimal) {
     BigDecimal newProportion = proportion.add(bigDecimal);
@@ -23,6 +24,11 @@ public class ModelSimplePosition implements Position {
       throw new UnsupportedOperationException("A proportion of a position can't be higher than 100%");
     }
     proportion = newProportion;
+  }
+
+  @Override
+  public PositionType getPositionType() {
+    return POSITION_TYPE;
   }
 
   @Override
