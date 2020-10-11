@@ -25,6 +25,10 @@ public class ComplexPosition implements Position {
   @Getter(AccessLevel.NONE)
   private List<Position> positions = new ArrayList<>();
 
+  public ComplexPosition(String name) {
+    this.name = name;
+  }
+
   @Override
   public PositionType getPositionType() {
     return POSITION_TYPE;
@@ -43,7 +47,7 @@ public class ComplexPosition implements Position {
     return positions.stream()
         .map(Position::getSharesWithNumbers)
         .flatMap(position -> position.entrySet().stream())
-        .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
+        .collect(Collectors.toMap(Entry::getKey, Entry::getValue)); // fixme: there is an issue in case there are positions with similar tickets
   }
 
   public void addPosition(Position position) {

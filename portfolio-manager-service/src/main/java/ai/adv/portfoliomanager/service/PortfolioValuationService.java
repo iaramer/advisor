@@ -26,10 +26,12 @@ public class PortfolioValuationService {
       log.error(NO_PRICES_PROVIDED);
       throw new IllegalArgumentException(NO_PRICES_PROVIDED);
     }
+    sharesPrices.put(portfolio.getBaseCurrency(), BigDecimal.ONE);
     Map<String, BigDecimal> sharesWithNumbers = portfolio.getSharesWithNumbers();
     return sharesWithNumbers.entrySet().stream()
         .map(entry -> getShareValue(sharesPrices, entry))
         .reduce(BigDecimal::add)
+        .map(value -> value.setScale(2)) //todo: handle different scales
         .orElse(BigDecimal.ZERO);
   }
 

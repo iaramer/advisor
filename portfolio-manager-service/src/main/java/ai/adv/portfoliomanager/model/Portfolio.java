@@ -21,20 +21,12 @@ public class Portfolio {
   public static final String DEFAULT_BASE_CURRENCY = "USD";
 
   private String name;
-
   private boolean isModel;
-
   @Builder.Default
   private String baseCurrency = DEFAULT_BASE_CURRENCY;
-
   @Getter(AccessLevel.NONE)
   @Builder.Default
   private List<Position> positions = new ArrayList<>();
-
-  public static Portfolio empty() {
-    return Portfolio.builder()
-        .build();
-  }
 
   public List<Position> getPositions() {
     return positions.stream()
