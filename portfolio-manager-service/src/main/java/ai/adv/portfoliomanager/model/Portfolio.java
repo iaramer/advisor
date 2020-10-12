@@ -42,6 +42,7 @@ public class Portfolio {
         .collect(Collectors.toList());
   }
 
+  //todo: obtain different scales
   public Map<String, BigDecimal> getSharesWithNumbers() {
     return positions.stream()
         .map(Position::getSharesWithNumbers)
