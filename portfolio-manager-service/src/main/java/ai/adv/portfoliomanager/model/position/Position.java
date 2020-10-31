@@ -1,5 +1,6 @@
 package ai.adv.portfoliomanager.model.position;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -8,10 +9,14 @@ import java.util.Map;
  */
 public interface Position {
 
+  PositionType getPositionType();
+
   List<String> getTickers();
 
-  Map<String, Integer> getSharesWithNumbers();
+  Map<String, BigDecimal> getSharesWithNumbers();
 
   List<Position> getPositions();
+
+  BigDecimal getPositionValue(BigDecimal price);
 
 }

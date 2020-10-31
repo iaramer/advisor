@@ -10,13 +10,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 @Deprecated
+@RequiredArgsConstructor
 public class MockDataService {
 
   private static final Map<String, BigDecimal> pricesOfPortfolioShares = new HashMap<>();
 
   static {
+    pricesOfPortfolioShares.put("RUB", new BigDecimal("1"));
+    pricesOfPortfolioShares.put("USD", new BigDecimal("75.16"));
     pricesOfPortfolioShares.put("FXIT", new BigDecimal("5456.12"));
     pricesOfPortfolioShares.put("SBSP", new BigDecimal("1274.78"));
     pricesOfPortfolioShares.put("SBCB", new BigDecimal("1077.23"));
