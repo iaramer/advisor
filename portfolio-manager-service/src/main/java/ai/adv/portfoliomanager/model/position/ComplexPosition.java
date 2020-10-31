@@ -1,6 +1,5 @@
 package ai.adv.portfoliomanager.model.position;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -19,20 +18,10 @@ import lombok.Setter;
 @Setter
 public class ComplexPosition implements Position {
 
-  private static final PositionType POSITION_TYPE = PositionType.COMPLEX_POSITION;
+  private String description;
 
-  private String name;
   @Getter(AccessLevel.NONE)
   private List<Position> positions = new ArrayList<>();
-
-  public ComplexPosition(String name) {
-    this.name = name;
-  }
-
-  @Override
-  public PositionType getPositionType() {
-    return POSITION_TYPE;
-  }
 
   @Override
   public List<String> getTickers() {
@@ -43,11 +32,11 @@ public class ComplexPosition implements Position {
   }
 
   @Override
-  public Map<String, BigDecimal> getSharesWithNumbers() {
+  public Map<String, Integer> getSharesWithNumbers() {
     return positions.stream()
         .map(Position::getSharesWithNumbers)
         .flatMap(position -> position.entrySet().stream())
-        .collect(Collectors.toMap(Entry::getKey, Entry::getValue)); // fixme: there is an issue in case there are positions with similar tickets
+        .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
   }
 
   public void addPosition(Position position) {
@@ -60,13 +49,5 @@ public class ComplexPosition implements Position {
         .map(Position::getPositions)
         .flatMap(Collection::stream)
         .collect(Collectors.toList());
-  }
-
-  @Override
-  public BigDecimal getPositionValue(BigDecimal price) {
-    return positions.stream()
-        .map(position -> position.getPositionValue(price))
-        .reduce(BigDecimal::add)
-        .orElse(BigDecimal.ZERO);
   }
 }
