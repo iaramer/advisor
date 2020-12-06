@@ -1,6 +1,7 @@
 package ai.adv.portfoliomanager.controller;
 
 import ai.adv.portfoliomanager.dto.PortfolioDto;
+import ai.adv.portfoliomanager.service.PortfolioService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

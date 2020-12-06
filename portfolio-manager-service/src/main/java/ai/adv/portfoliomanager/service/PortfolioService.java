@@ -4,9 +4,9 @@ import ai.adv.portfoliomanager.dto.PortfolioDto;
 import ai.adv.portfoliomanager.repository.PortfolioRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
-@Controller
+@Service
 @RequiredArgsConstructor
 public class PortfolioService {
 
