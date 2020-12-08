@@ -81,7 +81,7 @@ public class Balancer {
   private List<Entry<String, BigDecimal>> sort(Map<String, BigDecimal> modelPortfolio) {
     return modelPortfolio.entrySet().stream()
         .filter(this::isNotEmptyOrZero)
-        .sorted(Entry.comparingByValue()) //todo: check the order is really DESC. We need the highest proportions to go first
+        .sorted((f1, f2) -> -f1.getValue().compareTo(f2.getValue()))
         .collect(Collectors.toList());
   }
 

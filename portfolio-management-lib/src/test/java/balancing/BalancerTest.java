@@ -147,8 +147,8 @@ class BalancerTest {
     Map<String, BigDecimal> portfolio = balancer.formPortfolio(modelPortfolio, prices, cashValue);
 
     Map<String, BigDecimal> expectedPortfolio = new HashMap<>();
-    expectedPortfolio.put("GOOGL", new BigDecimal("3"));
-    expectedPortfolio.put("AAPL", new BigDecimal("70"));
+    expectedPortfolio.put("GOOGL", new BigDecimal("9"));
+    expectedPortfolio.put("AAPL", new BigDecimal("10"));
     Assertions.assertEquals(expectedPortfolio, portfolio);
   }
 
