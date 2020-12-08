@@ -48,6 +48,9 @@ public class Balancer {
       BigDecimal securityPrice = prices.get(entry.getKey());
       BigDecimal initialSecuritiesNumber = exactPositionValue
           .divide(securityPrice, 0, RoundingMode.FLOOR);
+      if (initialSecuritiesNumber.compareTo(BigDecimal.ZERO) <= 0) {
+        continue;
+      }
 
       BigDecimal newPositionValue = securityPrice.multiply(initialSecuritiesNumber);
       valueRemainder = valueRemainder.subtract(newPositionValue);
@@ -78,8 +81,7 @@ public class Balancer {
   private List<Entry<String, BigDecimal>> sort(Map<String, BigDecimal> modelPortfolio) {
     return modelPortfolio.entrySet().stream()
         .filter(this::isNotEmptyOrZero)
-        .sorted(Entry
-            .comparingByValue()) //todo: check the order is really DESC. We need the highest proportions to go first
+        .sorted(Entry.comparingByValue()) //todo: check the order is really DESC. We need the highest proportions to go first
         .collect(Collectors.toList());
   }
 

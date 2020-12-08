@@ -132,4 +132,24 @@ class BalancerTest {
     Assertions.assertEquals(expectedPortfolio, portfolio);
   }
 
+  @Test
+  void formPortfolio_ModelPortfolioWithThreeUnsortedShares_MapWithTwoPositions() {
+    Map<String, BigDecimal> modelPortfolio = new HashMap<>();
+    modelPortfolio.put("AAPL", new BigDecimal("0.1"));
+    modelPortfolio.put("MSFT", new BigDecimal("0.6"));
+    modelPortfolio.put("GOOGL", new BigDecimal("0.3"));
+    Map<String, BigDecimal> prices = new HashMap<>();
+    prices.put("AAPL", new BigDecimal("1"));
+    prices.put("MSFT", new BigDecimal("1000"));
+    prices.put("GOOGL", new BigDecimal("10"));
+    BigDecimal cashValue = new BigDecimal("100");
+
+    Map<String, BigDecimal> portfolio = balancer.formPortfolio(modelPortfolio, prices, cashValue);
+
+    Map<String, BigDecimal> expectedPortfolio = new HashMap<>();
+    expectedPortfolio.put("GOOGL", new BigDecimal("3"));
+    expectedPortfolio.put("AAPL", new BigDecimal("70"));
+    Assertions.assertEquals(expectedPortfolio, portfolio);
+  }
+
 }
