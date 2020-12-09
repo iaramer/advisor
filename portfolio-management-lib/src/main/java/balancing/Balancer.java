@@ -25,8 +25,7 @@ public class Balancer {
    */
   public Map<String, BigDecimal> formPortfolio(Map<String, BigDecimal> modelPortfolio,
       Map<String, BigDecimal> prices, BigDecimal cashValue) {
-
-    if (cashValue.equals(BigDecimal.ZERO)) {
+    if (cashValue.compareTo(BigDecimal.ZERO) <= 0) {
       return Collections.emptyMap();
     }
     if (modelPortfolio.isEmpty() || hasOnlyCashShare(modelPortfolio)) {
@@ -36,11 +35,13 @@ public class Balancer {
       throw new IllegalArgumentException("No prices provided");
     }
 
-    //todo: check all prices exist
+    modelPortfolio = new HashMap<>(modelPortfolio);
+    prices = new HashMap<>(prices);
+    checkNecessaryPricesProvided(prices, modelPortfolio);
 
     Map<String, BigDecimal> portfolio = new HashMap<>();
-
     BigDecimal valueRemainder = cashValue;
+
     List<Entry<String, BigDecimal>> modelPortfolioEntries = sort(modelPortfolio);
     List<Entry<String, BigDecimal>> normalizedModelPortfolioEntries = normalize(
         modelPortfolioEntries);
@@ -84,6 +85,15 @@ public class Balancer {
     }
 
     return portfolio;
+  }
+
+  void checkNecessaryPricesProvided(Map<String, BigDecimal> prices,
+      Map<String, BigDecimal> modelPortfolio) {
+    prices.put(baseCurrencyTicker, BigDecimal.ONE);
+    for (Entry<String, BigDecimal> entry : modelPortfolio.entrySet()) {
+      Optional.ofNullable(prices.get(entry.getKey()))
+          .orElseThrow(IllegalArgumentException::new);
+    }
   }
 
   private boolean hasOnlyCashShare(Map<String, BigDecimal> modelPortfolio) {

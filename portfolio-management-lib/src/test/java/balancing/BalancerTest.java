@@ -45,7 +45,7 @@ class BalancerTest {
   }
 
   @Test
-  void formPortfolio_EmptyPricesNonEmptyModelPortfolioAndCash_EmptyMap() {
+  void formPortfolio_EmptyPricesNonEmptyModelPortfolioAndCash_IllegalArgumentException() {
     Map<String, BigDecimal> modelPortfolio = Collections.singletonMap("MSFT", BigDecimal.ONE);
     Map<String, BigDecimal> prices = Collections.emptyMap();
     BigDecimal cashValue = BigDecimal.ONE;
@@ -208,8 +208,55 @@ class BalancerTest {
     Assertions.assertEquals(expectedPortfolio, portfolio);
   }
 
-  //todo: add case when prices argument includes base currency
+  @Test
+  void formPortfolio_PricesIncludeBaseCurrency_MapWithPositionIgnoringBaseCurrencyPriceProvided() {
+    balancer = new Balancer("EUR");
 
-  //todo: add case when prices do not include one of the model portfolio tickers
+    Map<String, BigDecimal> modelPortfolio = new HashMap<>();
+    modelPortfolio.put("EUR", new BigDecimal("0.6"));
+    modelPortfolio.put("MSFT", new BigDecimal("0.4"));
+    Map<String, BigDecimal> prices = new HashMap<>();
+    prices.put("EUR", new BigDecimal("60"));
+    prices.put("MSFT", new BigDecimal("1"));
+    BigDecimal cashValue = new BigDecimal("100");
 
+    Map<String, BigDecimal> portfolio = balancer.formPortfolio(modelPortfolio, prices, cashValue);
+
+    Map<String, BigDecimal> expectedPortfolio = new HashMap<>();
+    expectedPortfolio.put("EUR", new BigDecimal("60"));
+    expectedPortfolio.put("MSFT", new BigDecimal("40"));
+    Assertions.assertEquals(expectedPortfolio, portfolio);
+  }
+
+  @Test
+  void formPortfolio_PricesDoNotIncludeTicker_IllegalArgumentException() {
+    Map<String, BigDecimal> modelPortfolio = new HashMap<>();
+    modelPortfolio.put("AAPL", new BigDecimal("0.6"));
+    modelPortfolio.put("MSFT", new BigDecimal("0.4"));
+    Map<String, BigDecimal> prices = new HashMap<>();
+    prices.put("AAPL", new BigDecimal("1"));
+    prices.put("GOOGL", new BigDecimal("1"));
+    BigDecimal cashValue = new BigDecimal("100");
+
+    Assertions.assertThrows(IllegalArgumentException.class,
+        () -> balancer.formPortfolio(modelPortfolio, prices, cashValue));
+  }
+
+  @Test
+  void formPortfolio_ModelPortfolioWithUniqueSharePricesIncludeExtraTicker_MapWithUniquePosition() {
+    Map<String, BigDecimal> modelPortfolio = new HashMap<>();
+    modelPortfolio.put("AAPL", BigDecimal.ONE);
+    Map<String, BigDecimal> prices = new HashMap<>();
+    prices.put("AAPL", new BigDecimal("1"));
+    prices.put("MSFT", new BigDecimal("1"));
+    BigDecimal cashValue = new BigDecimal("100");
+
+    Map<String, BigDecimal> portfolio = balancer.formPortfolio(modelPortfolio, prices, cashValue);
+
+    Map<String, BigDecimal> expectedPortfolio = new HashMap<>();
+    expectedPortfolio.put("AAPL", new BigDecimal("100"));
+    Assertions.assertEquals(expectedPortfolio, portfolio);
+  }
+
+  //todo: case with negative cash
 }
