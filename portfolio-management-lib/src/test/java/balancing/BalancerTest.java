@@ -32,14 +32,16 @@ class BalancerTest {
   }
 
   @Test
-  void formPortfolio_EmptyModelPortfolioNonZeroPricesAndCash_EmptyMap() {
+  void formPortfolio_EmptyModelPortfolioNonZeroPricesAndCash_MapWithUniqueCashPosition() {
+    balancer = new Balancer("EUR");
+
     Map<String, BigDecimal> modelPortfolio = Collections.emptyMap();
     Map<String, BigDecimal> prices = Collections.singletonMap("MSFT", BigDecimal.ONE);
     BigDecimal cashValue = BigDecimal.ONE;
 
     Map<String, BigDecimal> portfolio = balancer.formPortfolio(modelPortfolio, prices, cashValue);
 
-    Assertions.assertEquals(Collections.emptyMap(), portfolio);
+    Assertions.assertEquals(Collections.singletonMap("EUR", cashValue), portfolio);
   }
 
   @Test
@@ -151,5 +153,63 @@ class BalancerTest {
     expectedPortfolio.put("AAPL", new BigDecimal("10"));
     Assertions.assertEquals(expectedPortfolio, portfolio);
   }
+
+  @Test
+  void formPortfolio_ModelPortfolioWithUnsortedShares_MapWithSortedPositions() {
+    Map<String, BigDecimal> modelPortfolio = new HashMap<>();
+    modelPortfolio.put("AAPL", new BigDecimal("0.1"));
+    modelPortfolio.put("MSFT", new BigDecimal("0.6"));
+    modelPortfolio.put("GOOGL", new BigDecimal("0.3"));
+    Map<String, BigDecimal> prices = new HashMap<>();
+    prices.put("AAPL", new BigDecimal("1"));
+    prices.put("MSFT", new BigDecimal("1"));
+    prices.put("GOOGL", new BigDecimal("1"));
+    BigDecimal cashValue = new BigDecimal("100");
+
+    Map<String, BigDecimal> portfolio = balancer.formPortfolio(modelPortfolio, prices, cashValue);
+
+    Map<String, BigDecimal> expectedPortfolio = new HashMap<>();
+    expectedPortfolio.put("MSFT", new BigDecimal("60"));
+    expectedPortfolio.put("GOOGL", new BigDecimal("30"));
+    expectedPortfolio.put("AAPL", new BigDecimal("10"));
+    Assertions.assertEquals(expectedPortfolio, portfolio);
+  }
+
+  @Test
+  void formPortfolio_ModelPortfolioWithTwoShares_MapWithUniquePositionAddedBySecondIteration() {
+    Map<String, BigDecimal> modelPortfolio = new HashMap<>();
+    modelPortfolio.put("AAPL", new BigDecimal("0.6"));
+    modelPortfolio.put("MSFT", new BigDecimal("0.4"));
+    Map<String, BigDecimal> prices = new HashMap<>();
+    prices.put("AAPL", new BigDecimal("100"));
+    prices.put("MSFT", new BigDecimal("100"));
+    BigDecimal cashValue = new BigDecimal("100");
+
+    Map<String, BigDecimal> portfolio = balancer.formPortfolio(modelPortfolio, prices, cashValue);
+
+    Map<String, BigDecimal> expectedPortfolio = new HashMap<>();
+    expectedPortfolio.put("AAPL", new BigDecimal("1"));
+    Assertions.assertEquals(expectedPortfolio, portfolio);
+  }
+
+  @Test
+  void formPortfolio_ModelPortfolioWithUniqueCashShare_MapWithUniqueCashPosition() {
+    balancer = new Balancer("EUR");
+
+    Map<String, BigDecimal> modelPortfolio = new HashMap<>();
+    modelPortfolio.put("EUR", new BigDecimal("1"));
+    Map<String, BigDecimal> prices = Collections.emptyMap();
+    BigDecimal cashValue = new BigDecimal("100");
+
+    Map<String, BigDecimal> portfolio = balancer.formPortfolio(modelPortfolio, prices, cashValue);
+
+    Map<String, BigDecimal> expectedPortfolio = new HashMap<>();
+    expectedPortfolio.put("EUR", new BigDecimal("100"));
+    Assertions.assertEquals(expectedPortfolio, portfolio);
+  }
+
+  //todo: add case when prices argument includes base currency
+
+  //todo: add case when prices do not include one of the model portfolio tickers
 
 }

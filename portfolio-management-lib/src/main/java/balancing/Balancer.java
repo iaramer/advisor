@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -16,16 +17,20 @@ import org.apache.commons.lang3.StringUtils;
 @RequiredArgsConstructor
 public class Balancer {
 
-  private final String currencyTicker;
+  private final String baseCurrencyTicker;
 
   /**
-   * Формирует портфель. Возвращает мапу "тикер"-"колличество акций". Не зависит от валюты актива.
+   * Forms an investments portfolio. Returns a Map "Ticker"-"Number of shares". Prices should be
+   * given in Base Currency.
    */
   public Map<String, BigDecimal> formPortfolio(Map<String, BigDecimal> modelPortfolio,
       Map<String, BigDecimal> prices, BigDecimal cashValue) {
 
-    if (modelPortfolio.isEmpty() || cashValue.equals(BigDecimal.ZERO)) {
+    if (cashValue.equals(BigDecimal.ZERO)) {
       return Collections.emptyMap();
+    }
+    if (modelPortfolio.isEmpty() || hasOnlyCashShare(modelPortfolio)) {
+      return Collections.singletonMap(baseCurrencyTicker, cashValue);
     }
     if (prices.isEmpty()) {
       throw new IllegalArgumentException("No prices provided");
@@ -58,24 +63,32 @@ public class Balancer {
     }
 
     for (Entry<String, BigDecimal> entry : normalizedModelPortfolioEntries) {
-      BigDecimal securityPrice = prices.get(entry.getKey());
+      String ticker = entry.getKey();
+
+      BigDecimal securityPrice = prices.get(ticker);
       BigDecimal additionalSecuritiesNumber = valueRemainder
           .divide(securityPrice, 0, RoundingMode.FLOOR);
       if (additionalSecuritiesNumber.compareTo(BigDecimal.ZERO) <= 0) {
         continue;
       }
 
-      BigDecimal initialSecuritiesNumber = portfolio.get(entry.getKey()); //todo: what if there's no such key in portfolio from the first iteration
+      BigDecimal initialSecuritiesNumber = Optional.ofNullable(portfolio.get(ticker))
+          .orElse(BigDecimal.ZERO);
       BigDecimal finalSecuritiesNumber = additionalSecuritiesNumber.add(initialSecuritiesNumber);
       valueRemainder = valueRemainder.subtract(finalSecuritiesNumber.multiply(securityPrice));
-      portfolio.put(entry.getKey(), finalSecuritiesNumber.setScale(0, RoundingMode.DOWN));
+      portfolio.put(ticker, finalSecuritiesNumber.setScale(0, RoundingMode.DOWN));
     }
 
     if (valueRemainder.compareTo(BigDecimal.ZERO) > 0) {
-      portfolio.put(currencyTicker, valueRemainder);
+      portfolio.put(baseCurrencyTicker, valueRemainder);
     }
 
     return portfolio;
+  }
+
+  private boolean hasOnlyCashShare(Map<String, BigDecimal> modelPortfolio) {
+    return modelPortfolio.size() == 1
+        && modelPortfolio.get(baseCurrencyTicker) != null;
   }
 
   private List<Entry<String, BigDecimal>> sort(Map<String, BigDecimal> modelPortfolio) {
