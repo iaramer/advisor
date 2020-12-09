@@ -258,5 +258,15 @@ class BalancerTest {
     Assertions.assertEquals(expectedPortfolio, portfolio);
   }
 
-  //todo: case with negative cash
+  @Test
+  void formPortfolio_ModelPortfolioWithNegativeCash_EmptyMap() {
+    Map<String, BigDecimal> modelPortfolio = Collections.singletonMap("AAPL", BigDecimal.ONE);
+    Map<String, BigDecimal> prices = Collections.singletonMap("AAPL", BigDecimal.ONE);
+    BigDecimal cashValue = new BigDecimal("-100");
+
+    Map<String, BigDecimal> portfolio = balancer.formPortfolio(modelPortfolio, prices, cashValue);
+
+    Map<String, BigDecimal> expectedPortfolio = Collections.emptyMap();
+    Assertions.assertEquals(expectedPortfolio, portfolio);
+  }
 }
