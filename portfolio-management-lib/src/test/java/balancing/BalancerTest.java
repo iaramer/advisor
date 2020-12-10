@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,10 +15,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class BalancerTest {
 
   private Balancer balancer;
+  private String baseCurrency;
 
   @BeforeEach
   void setUp() {
-    balancer = new Balancer("USD");
+    baseCurrency = "USD";
+    balancer = new Balancer(baseCurrency);
   }
 
   @Test
@@ -33,7 +36,8 @@ class BalancerTest {
 
   @Test
   void formPortfolio_EmptyModelPortfolioNonZeroPricesAndCash_MapWithUniqueCashPosition() {
-    balancer = new Balancer("EUR");
+    baseCurrency = "EUR";
+    balancer = new Balancer(baseCurrency);
 
     Map<String, BigDecimal> modelPortfolio = Collections.emptyMap();
     Map<String, BigDecimal> prices = Collections.singletonMap("MSFT", BigDecimal.ONE);
@@ -41,7 +45,9 @@ class BalancerTest {
 
     Map<String, BigDecimal> portfolio = balancer.formPortfolio(modelPortfolio, prices, cashValue);
 
-    Assertions.assertEquals(Collections.singletonMap("EUR", cashValue), portfolio);
+    Assertions.assertEquals(Collections.singletonMap(baseCurrency, cashValue), portfolio);
+    BigDecimal portfolioValue = assessPortfolioValue(portfolio, prices, baseCurrency);
+    Assertions.assertEquals(cashValue, portfolioValue);
   }
 
   @Test
@@ -62,7 +68,9 @@ class BalancerTest {
 
     Map<String, BigDecimal> portfolio = balancer.formPortfolio(modelPortfolio, prices, cashValue);
 
-    Assertions.assertEquals(Collections.singletonMap("USD", BigDecimal.ONE), portfolio);
+    Assertions.assertEquals(Collections.singletonMap(baseCurrency, BigDecimal.ONE), portfolio);
+    BigDecimal portfolioValue = assessPortfolioValue(portfolio, prices, baseCurrency);
+    Assertions.assertEquals(cashValue, portfolioValue);
   }
 
   @Test
@@ -74,6 +82,8 @@ class BalancerTest {
     Map<String, BigDecimal> portfolio = balancer.formPortfolio(modelPortfolio, prices, cashValue);
 
     Assertions.assertEquals(Collections.singletonMap("MSFT", BigDecimal.ONE), portfolio);
+    BigDecimal portfolioValue = assessPortfolioValue(portfolio, prices, baseCurrency);
+    Assertions.assertEquals(cashValue, portfolioValue);
   }
 
   @Test
@@ -92,6 +102,8 @@ class BalancerTest {
     expectedPortfolio.put("AAPL", BigDecimal.ONE);
     expectedPortfolio.put("MSFT", BigDecimal.ONE);
     Assertions.assertEquals(expectedPortfolio, portfolio);
+    BigDecimal portfolioValue = assessPortfolioValue(portfolio, prices, baseCurrency);
+    Assertions.assertEquals(cashValue, portfolioValue);
   }
 
   @Test
@@ -110,6 +122,8 @@ class BalancerTest {
     expectedPortfolio.put("AAPL", BigDecimal.ONE);
     expectedPortfolio.put("MSFT", BigDecimal.ONE);
     Assertions.assertEquals(expectedPortfolio, portfolio);
+    BigDecimal portfolioValue = assessPortfolioValue(portfolio, prices, baseCurrency);
+    Assertions.assertEquals(cashValue, portfolioValue);
   }
 
   @Test
@@ -130,8 +144,10 @@ class BalancerTest {
     expectedPortfolio.put("AAPL", BigDecimal.ONE);
     expectedPortfolio.put("MSFT", BigDecimal.ONE);
     expectedPortfolio.put("GOOGL", BigDecimal.ONE);
-    expectedPortfolio.put("USD", BigDecimal.ONE);
+    expectedPortfolio.put(baseCurrency, BigDecimal.ONE);
     Assertions.assertEquals(expectedPortfolio, portfolio);
+    BigDecimal portfolioValue = assessPortfolioValue(portfolio, prices, baseCurrency);
+    Assertions.assertEquals(cashValue, portfolioValue);
   }
 
   @Test
@@ -152,6 +168,8 @@ class BalancerTest {
     expectedPortfolio.put("GOOGL", new BigDecimal("9"));
     expectedPortfolio.put("AAPL", new BigDecimal("10"));
     Assertions.assertEquals(expectedPortfolio, portfolio);
+    BigDecimal portfolioValue = assessPortfolioValue(portfolio, prices, baseCurrency);
+    Assertions.assertEquals(cashValue, portfolioValue);
   }
 
   @Test
@@ -173,6 +191,8 @@ class BalancerTest {
     expectedPortfolio.put("GOOGL", new BigDecimal("30"));
     expectedPortfolio.put("AAPL", new BigDecimal("10"));
     Assertions.assertEquals(expectedPortfolio, portfolio);
+    BigDecimal portfolioValue = assessPortfolioValue(portfolio, prices, baseCurrency);
+    Assertions.assertEquals(cashValue, portfolioValue);
   }
 
   @Test
@@ -190,42 +210,49 @@ class BalancerTest {
     Map<String, BigDecimal> expectedPortfolio = new HashMap<>();
     expectedPortfolio.put("AAPL", new BigDecimal("1"));
     Assertions.assertEquals(expectedPortfolio, portfolio);
+    BigDecimal portfolioValue = assessPortfolioValue(portfolio, prices, baseCurrency);
+    Assertions.assertEquals(cashValue, portfolioValue);
   }
 
   @Test
   void formPortfolio_ModelPortfolioWithUniqueCashShare_MapWithUniqueCashPosition() {
-    balancer = new Balancer("EUR");
+    baseCurrency = "EUR";
+    balancer = new Balancer(baseCurrency);
 
     Map<String, BigDecimal> modelPortfolio = new HashMap<>();
-    modelPortfolio.put("EUR", new BigDecimal("1"));
+    modelPortfolio.put(baseCurrency, new BigDecimal("1"));
     Map<String, BigDecimal> prices = Collections.emptyMap();
     BigDecimal cashValue = new BigDecimal("100");
 
     Map<String, BigDecimal> portfolio = balancer.formPortfolio(modelPortfolio, prices, cashValue);
 
     Map<String, BigDecimal> expectedPortfolio = new HashMap<>();
-    expectedPortfolio.put("EUR", new BigDecimal("100"));
+    expectedPortfolio.put(baseCurrency, new BigDecimal("100"));
     Assertions.assertEquals(expectedPortfolio, portfolio);
+    BigDecimal portfolioValue = assessPortfolioValue(portfolio, prices, baseCurrency);
+    Assertions.assertEquals(cashValue, portfolioValue);
   }
 
   @Test
   void formPortfolio_PricesIncludeBaseCurrency_MapWithPositionIgnoringBaseCurrencyPriceProvided() {
-    balancer = new Balancer("EUR");
+    balancer = new Balancer(baseCurrency);
 
     Map<String, BigDecimal> modelPortfolio = new HashMap<>();
-    modelPortfolio.put("EUR", new BigDecimal("0.6"));
+    modelPortfolio.put(baseCurrency, new BigDecimal("0.6"));
     modelPortfolio.put("MSFT", new BigDecimal("0.4"));
     Map<String, BigDecimal> prices = new HashMap<>();
-    prices.put("EUR", new BigDecimal("60"));
+    prices.put(baseCurrency, new BigDecimal("60"));
     prices.put("MSFT", new BigDecimal("1"));
     BigDecimal cashValue = new BigDecimal("100");
 
     Map<String, BigDecimal> portfolio = balancer.formPortfolio(modelPortfolio, prices, cashValue);
 
     Map<String, BigDecimal> expectedPortfolio = new HashMap<>();
-    expectedPortfolio.put("EUR", new BigDecimal("60"));
+    expectedPortfolio.put(baseCurrency, new BigDecimal("60"));
     expectedPortfolio.put("MSFT", new BigDecimal("40"));
     Assertions.assertEquals(expectedPortfolio, portfolio);
+    BigDecimal portfolioValue = assessPortfolioValue(portfolio, prices, baseCurrency);
+    Assertions.assertEquals(cashValue, portfolioValue);
   }
 
   @Test
@@ -256,6 +283,8 @@ class BalancerTest {
     Map<String, BigDecimal> expectedPortfolio = new HashMap<>();
     expectedPortfolio.put("AAPL", new BigDecimal("100"));
     Assertions.assertEquals(expectedPortfolio, portfolio);
+    BigDecimal portfolioValue = assessPortfolioValue(portfolio, prices, baseCurrency);
+    Assertions.assertEquals(cashValue, portfolioValue);
   }
 
   @Test
@@ -268,5 +297,20 @@ class BalancerTest {
 
     Map<String, BigDecimal> expectedPortfolio = Collections.emptyMap();
     Assertions.assertEquals(expectedPortfolio, portfolio);
+  }
+
+  private BigDecimal assessPortfolioValue(Map<String, BigDecimal> positions,
+      Map<String, BigDecimal> prices, String baseCurrency) {
+    prices = new HashMap<>(prices);
+    prices.put(baseCurrency, BigDecimal.ONE);
+    BigDecimal portfolioValue = BigDecimal.ZERO;
+
+    for (Entry<String, BigDecimal> position : positions.entrySet()) {
+      BigDecimal securityPrice = prices.get(position.getKey());
+      BigDecimal positionValue = position.getValue().multiply(securityPrice);
+      portfolioValue = portfolioValue.add(positionValue);
+    }
+
+    return portfolioValue;
   }
 }
