@@ -22,7 +22,9 @@
     <description>Recommendation system</description>
 
     <properties>
-        <java.version>14</java.version>
+        <java.version>15</java.version>
+        <lombok.version>1.18.16</lombok.version>
+        <spring-kafka.version>2.5.0.RELEASE</spring-kafka.version>
         <flyway-core.version>6.5.3</flyway-core.version>
         <commons-lang3.version>3.11</commons-lang3.version>
         <mail.version>1.4.7</mail.version>
@@ -46,7 +48,7 @@
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
-            <version>2.5.0.RELEASE</version>
+            <version>${spring-kafka.version}</version>
         </dependency>
 
         <!-- Tests -->
@@ -77,7 +79,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.16</version>
+            <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -108,14 +110,5 @@
             </exclusions>
         </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>

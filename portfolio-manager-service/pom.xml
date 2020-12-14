@@ -11,7 +11,18 @@
 
   <artifactId>portfolio-manager-service</artifactId>
 
+  <properties>
+    <portfolio-management-lib.version>0.0.1-SNAPSHOT</portfolio-management-lib.version>
+  </properties>
+
   <dependencies>
+    <dependency>
+      <groupId>ai.adv</groupId>
+      <artifactId>portfolio-management-lib</artifactId>
+      <version>${portfolio-management-lib.version}</version>
+      <scope>compile</scope>
+    </dependency>
+
     <dependency>
       <groupId>org.flywaydb</groupId>
       <artifactId>flyway-core</artifactId>
@@ -26,5 +37,14 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>
