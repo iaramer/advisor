@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 public class PortfolioService {
 
   private final PortfolioRepository portfolioRepository;
+  private final PortfolioManagementService portfolioManagementService;
 
   public void create(PortfolioDto portfolioDto) {
     portfolioRepository.save(portfolioDto);
@@ -18,5 +19,9 @@ public class PortfolioService {
 
   public List<PortfolioDto> getAllPortfolios() {
     return portfolioRepository.getAllPortfolios();
+  }
+
+  public List<PortfolioDto> formPortfolio() {
+    return portfolioManagementService.formPortfolio();
   }
 }

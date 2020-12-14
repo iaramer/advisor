@@ -6,6 +6,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -18,5 +19,10 @@ public class PortfolioController {
   @GetMapping("/all")
   public List<PortfolioDto> getAllPortfolios() {
     return portfolioService.getAllPortfolios();
+  }
+
+  @PostMapping("/form")
+  public List<PortfolioDto> formPortfolio() {
+    return portfolioService.formPortfolio();
   }
 }
