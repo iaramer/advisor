@@ -1,5 +1,6 @@
 package ai.adv.portfoliomanager.service;
 
+import ai.adv.portfoliomanager.dto.ModelPortfolioDto;
 import ai.adv.portfoliomanager.dto.PortfolioDto;
 import ai.adv.portfoliomanager.repository.PortfolioRepository;
 import java.math.BigDecimal;
@@ -23,7 +24,7 @@ public class PortfolioService {
     return portfolioRepository.getAllPortfolios();
   }
 
-  public Map<String, BigDecimal> formPortfolio() {
-    return portfolioManagementService.formPortfolio();
+  public Map<String, BigDecimal> formPortfolio(ModelPortfolioDto modelPortfolioDto) {
+    return portfolioManagementService.formPortfolio(modelPortfolioDto);
   }
 }

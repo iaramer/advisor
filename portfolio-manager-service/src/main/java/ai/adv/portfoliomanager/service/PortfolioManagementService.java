@@ -1,5 +1,6 @@
 package ai.adv.portfoliomanager.service;
 
+import ai.adv.portfoliomanager.dto.ModelPortfolioDto;
 import balancing.Balancer;
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class PortfolioManagementService {
 
-  public Map<String, BigDecimal> formPortfolio() {
+  public Map<String, BigDecimal> formPortfolio(ModelPortfolioDto modelPortfolioDto) {
     Map<String, BigDecimal> modelPortfolio = new HashMap<>();
     Map<String, BigDecimal> prices = new HashMap<>();
     BigDecimal cashValue = BigDecimal.ONE;
