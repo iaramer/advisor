@@ -2,7 +2,9 @@ package ai.adv.portfoliomanager.service;
 
 import ai.adv.portfoliomanager.dto.PortfolioDto;
 import ai.adv.portfoliomanager.repository.PortfolioRepository;
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +23,7 @@ public class PortfolioService {
     return portfolioRepository.getAllPortfolios();
   }
 
-  public List<PortfolioDto> formPortfolio() {
+  public Map<String, BigDecimal> formPortfolio() {
     return portfolioManagementService.formPortfolio();
   }
 }
