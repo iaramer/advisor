@@ -299,6 +299,30 @@ class BalancerTest {
     Assertions.assertEquals(expectedPortfolio, portfolio);
   }
 
+  @Test
+  void formPortfolio_ModelPortfolioWithSecondIterationNeeded_MapWithPositionsAndCash() {
+    Map<String, BigDecimal> modelPortfolio = new HashMap<>();
+    modelPortfolio.put("AAPL", new BigDecimal("0.1"));
+    modelPortfolio.put("MSFT", new BigDecimal("0.3"));
+    modelPortfolio.put("GOOGL", new BigDecimal("0.6"));
+    Map<String, BigDecimal> prices = new HashMap<>();
+    prices.put("AAPL", new BigDecimal("0.99"));
+    prices.put("MSFT", new BigDecimal("3"));
+    prices.put("GOOGL", new BigDecimal("4"));
+    BigDecimal cashValue = new BigDecimal("10");
+
+    Map<String, BigDecimal> portfolio = balancer.formPortfolio(modelPortfolio, prices, cashValue);
+
+    Map<String, BigDecimal> expectedPortfolio = new HashMap<>();
+    expectedPortfolio.put("AAPL", new BigDecimal("3"));
+    expectedPortfolio.put("MSFT", new BigDecimal("1"));
+    expectedPortfolio.put("GOOGL", new BigDecimal("1"));
+    expectedPortfolio.put("USD", new BigDecimal("0.03"));
+    Assertions.assertEquals(expectedPortfolio, portfolio);
+    BigDecimal portfolioValue = assessPortfolioValue(portfolio, prices, baseCurrency);
+    Assertions.assertEquals(cashValue, portfolioValue);
+  }
+
   private BigDecimal assessPortfolioValue(Map<String, BigDecimal> positions,
       Map<String, BigDecimal> prices, String baseCurrency) {
     prices = new HashMap<>(prices);
@@ -311,6 +335,6 @@ class BalancerTest {
       portfolioValue = portfolioValue.add(positionValue);
     }
 
-    return portfolioValue;
+    return new BigDecimal(portfolioValue.stripTrailingZeros().toPlainString());
   }
 }

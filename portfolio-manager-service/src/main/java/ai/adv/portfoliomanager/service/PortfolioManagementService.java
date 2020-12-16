@@ -19,7 +19,7 @@ public class PortfolioManagementService {
     Map<String, BigDecimal> modelPortfolio = modelPortfolioDto.getModelPortfolio();
     Map<String, BigDecimal> prices = new HashMap<>();
     prices.put("FXTB", new BigDecimal("734"));
-    prices.put("FXGD", new BigDecimal("879"));
+    prices.put("FXGD", new BigDecimal("8"));
     prices.put("FXUS", new BigDecimal("4789"));
     BigDecimal cashValue  = modelPortfolioDto.getCashValue();
 

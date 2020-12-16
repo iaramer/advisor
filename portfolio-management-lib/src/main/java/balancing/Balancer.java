@@ -76,7 +76,7 @@ public class Balancer {
       BigDecimal initialSecuritiesNumber = Optional.ofNullable(portfolio.get(ticker))
           .orElse(BigDecimal.ZERO);
       BigDecimal finalSecuritiesNumber = additionalSecuritiesNumber.add(initialSecuritiesNumber);
-      valueRemainder = valueRemainder.subtract(finalSecuritiesNumber.multiply(securityPrice));
+      valueRemainder = valueRemainder.subtract(additionalSecuritiesNumber.multiply(securityPrice));
       portfolio.put(ticker, finalSecuritiesNumber.setScale(0, RoundingMode.DOWN));
     }
 
