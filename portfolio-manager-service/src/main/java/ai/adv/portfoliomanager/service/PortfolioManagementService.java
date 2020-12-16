@@ -18,7 +18,6 @@ public class PortfolioManagementService {
   private final MockDataService mockDataService;
 
   public Map<String, BigDecimal> formPortfolio(ModelPortfolioDto modelPortfolioDto) {
-
     Map<String, BigDecimal> modelPortfolio = modelPortfolioDto.getModelPortfolio();
     List<String> tickers = new ArrayList<>(modelPortfolio.keySet());
     Map<String, BigDecimal> prices = mockDataService.getPricesByTickers(tickers);
