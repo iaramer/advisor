@@ -15,11 +15,15 @@ import org.springframework.stereotype.Service;
 public class PortfolioManagementService {
 
   public Map<String, BigDecimal> formPortfolio(ModelPortfolioDto modelPortfolioDto) {
-    Map<String, BigDecimal> modelPortfolio = new HashMap<>();
-    Map<String, BigDecimal> prices = new HashMap<>();
-    BigDecimal cashValue = BigDecimal.ONE;
 
-    Balancer balancer = new Balancer("USD");
+    Map<String, BigDecimal> modelPortfolio = modelPortfolioDto.getModelPortfolio();
+    Map<String, BigDecimal> prices = new HashMap<>();
+    prices.put("FXTB", new BigDecimal("734"));
+    prices.put("FXGD", new BigDecimal("879"));
+    prices.put("FXUS", new BigDecimal("4789"));
+    BigDecimal cashValue  = modelPortfolioDto.getCashValue();
+
+    Balancer balancer = new Balancer(modelPortfolioDto.getBaseCurrency());
     return balancer.formPortfolio(modelPortfolio, prices, cashValue);
   }
 }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
+@Deprecated
 @RequiredArgsConstructor
 public class PortfolioValuationService {
 

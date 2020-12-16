@@ -1,5 +1,7 @@
 package ai.adv.portfoliomanager.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.math.BigDecimal;
 import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,10 +14,13 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ModelPortfolioDto {
 
+  @JsonProperty("base_currency")
   private String baseCurrency;
 
-  private Map<String, String> modelPortfolio;
+  @JsonProperty("model_portfolio")
+  private Map<String, BigDecimal> modelPortfolio;
 
-  private String cashValue;
+  @JsonProperty("cash_value")
+  private BigDecimal cashValue;
 
 }
