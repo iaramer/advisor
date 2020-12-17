@@ -17,13 +17,18 @@ public class MockDataService {
   private static final Map<String, BigDecimal> pricesOfPortfolioShares = new HashMap<>();
 
   static {
-    pricesOfPortfolioShares.put("USD", new BigDecimal("75.16"));
-    pricesOfPortfolioShares.put("FXIT", new BigDecimal("5456.12"));
     pricesOfPortfolioShares.put("SBSP", new BigDecimal("1274.78"));
+    pricesOfPortfolioShares.put("FXIT", new BigDecimal("5456.12"));
+    pricesOfPortfolioShares.put("FXCN", new BigDecimal("3224.12"));
+    pricesOfPortfolioShares.put("VTBE", new BigDecimal("1033.12"));
+    pricesOfPortfolioShares.put("FXRU", new BigDecimal("849.12"));
+    pricesOfPortfolioShares.put("VTBH", new BigDecimal("1546.12"));
+    pricesOfPortfolioShares.put("FXGD", new BigDecimal("877.56"));
+    pricesOfPortfolioShares.put("FXTB", new BigDecimal("1078.98"));
+
+    pricesOfPortfolioShares.put("USD", new BigDecimal("75.16"));
     pricesOfPortfolioShares.put("SBCB", new BigDecimal("1077.23"));
-    pricesOfPortfolioShares.put("FXGD", new BigDecimal("778.56"));
     pricesOfPortfolioShares.put("FXUS", new BigDecimal("4879.17"));
-    pricesOfPortfolioShares.put("FXTB", new BigDecimal("849.98"));
   }
 
   public Map<String, BigDecimal> getPricesByTickers(List<String> tickers) {
