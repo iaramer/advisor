@@ -1,6 +1,7 @@
 package ai.adv.portfoliomanager.service;
 
 import ai.adv.portfoliomanager.dto.ModelPortfolioDto;
+import ai.adv.portfoliomanager.service.data.DataService;
 import balancing.Balancer;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -15,12 +16,12 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class PortfolioManagementService {
 
-  private final MockDataService mockDataService;
+  private final DataService dataService;
 
   public Map<String, BigDecimal> formPortfolio(ModelPortfolioDto modelPortfolioDto) {
     Map<String, BigDecimal> modelPortfolio = modelPortfolioDto.getModelPortfolio();
     List<String> tickers = new ArrayList<>(modelPortfolio.keySet());
-    Map<String, BigDecimal> prices = mockDataService.getPricesByTickers(tickers);
+    Map<String, BigDecimal> prices = dataService.getPricesByTickers(tickers);
     BigDecimal cashValue = modelPortfolioDto.getCashValue();
 
     Balancer balancer = new Balancer(modelPortfolioDto.getBaseCurrency());

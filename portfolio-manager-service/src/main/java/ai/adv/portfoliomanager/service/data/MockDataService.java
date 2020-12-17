@@ -1,4 +1,4 @@
-package ai.adv.portfoliomanager.service;
+package ai.adv.portfoliomanager.service.data;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 @Deprecated
 @RequiredArgsConstructor
-public class MockDataService {
+public class MockDataService implements DataService {
 
   private static final Map<String, BigDecimal> pricesOfPortfolioShares = new HashMap<>();
 
@@ -31,6 +31,7 @@ public class MockDataService {
     pricesOfPortfolioShares.put("FXUS", new BigDecimal("4879.17"));
   }
 
+  @Override
   public Map<String, BigDecimal> getPricesByTickers(List<String> tickers) {
     return pricesOfPortfolioShares.entrySet().stream()
         .filter(entry -> tickers.contains(entry.getKey()))
