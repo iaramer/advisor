@@ -17,14 +17,14 @@ public class MockDataService implements DataService {
   private static final Map<String, BigDecimal> pricesOfPortfolioShares = new HashMap<>();
 
   static {
-    pricesOfPortfolioShares.put("SBSP", new BigDecimal("1274.78"));
-    pricesOfPortfolioShares.put("FXIT", new BigDecimal("5456.12"));
-    pricesOfPortfolioShares.put("FXCN", new BigDecimal("3224.12"));
-    pricesOfPortfolioShares.put("VTBE", new BigDecimal("1033.12"));
-    pricesOfPortfolioShares.put("FXRU", new BigDecimal("849.12"));
-    pricesOfPortfolioShares.put("VTBH", new BigDecimal("1546.12"));
-    pricesOfPortfolioShares.put("FXGD", new BigDecimal("877.56"));
-    pricesOfPortfolioShares.put("FXTB", new BigDecimal("1078.98"));
+    pricesOfPortfolioShares.put("SBSP", new BigDecimal("1439.2"));
+    pricesOfPortfolioShares.put("FXIT", new BigDecimal("9349"));
+    pricesOfPortfolioShares.put("FXCN", new BigDecimal("3943.5"));
+    pricesOfPortfolioShares.put("VTBE", new BigDecimal("902"));
+    pricesOfPortfolioShares.put("FXRU", new BigDecimal("935.4"));
+    pricesOfPortfolioShares.put("VTBH", new BigDecimal("782.4"));
+    pricesOfPortfolioShares.put("FXGD", new BigDecimal("926.6"));
+    pricesOfPortfolioShares.put("FXTB", new BigDecimal("742.0"));
 
     pricesOfPortfolioShares.put("USD", new BigDecimal("75.16"));
     pricesOfPortfolioShares.put("SBCB", new BigDecimal("1077.23"));
