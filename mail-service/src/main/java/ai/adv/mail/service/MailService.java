@@ -23,11 +23,11 @@ public class MailService {
   private static final String MESSAGE_SUBJECT = "Advisor service Info";
 
   @Value("${mail-service.email.address}")
-  private String MAIL_SERVICE_EMAIL_ADDRESS;
+  private String mailServiceEmailAddress;
   @Value("${mail-service.email.password}")
-  private String MAIL_SERVICE_EMAIL_PASSWORD;
+  private String mailServiceEmailPassword;
   @Value("${mail-service.test-address}")
-  private String TO;
+  private String to;
 
   public void sendEmailMessage(String emailMessage) {
     Properties properties = getProperties();
@@ -47,7 +47,7 @@ public class MailService {
     return Session.getInstance(properties, new Authenticator() {
       @Override
       protected PasswordAuthentication getPasswordAuthentication() {
-        return new PasswordAuthentication(MAIL_SERVICE_EMAIL_ADDRESS, MAIL_SERVICE_EMAIL_PASSWORD);
+        return new PasswordAuthentication(mailServiceEmailAddress, mailServiceEmailPassword);
       }
     });
   }
@@ -63,8 +63,8 @@ public class MailService {
 
   private Message getMessage(String emailMessage, Session session) throws MessagingException {
     Message message = new MimeMessage(session);
-    message.setFrom(new InternetAddress(MAIL_SERVICE_EMAIL_ADDRESS));
-    message.addRecipient(Message.RecipientType.TO, new InternetAddress(TO));
+    message.setFrom(new InternetAddress(mailServiceEmailAddress));
+    message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
     message.setSubject(MESSAGE_SUBJECT);
     message.setText(String.format(TEMPLATE_MESSAGE, emailMessage));
     return message;
