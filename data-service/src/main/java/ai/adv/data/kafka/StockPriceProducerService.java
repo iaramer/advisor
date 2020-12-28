@@ -17,7 +17,7 @@ public class StockPriceProducerService {
 
   private final KafkaTemplate<Object, StockPriceDto> kafkaTemplate;
 
-  public void sendMessage(StockPriceDto stockPriceDto) {
+  public void publish(StockPriceDto stockPriceDto) {
     kafkaTemplate.send(topic, stockPriceDto);
   }
 }
