@@ -4,3 +4,7 @@ server:
 kafka:
   queues:
     stock-prices: stock-prices
+
+cron:
+  refresh:
+    stock-prices: "0 * * * * *"
