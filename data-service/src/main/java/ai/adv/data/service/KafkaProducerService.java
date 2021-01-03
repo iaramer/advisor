@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
-@Service
 @Slf4j
+@Service
 @RequiredArgsConstructor
 public class KafkaProducerService {
 
@@ -17,7 +17,6 @@ public class KafkaProducerService {
   private final KafkaTemplate<String, String> kafkaTemplate;
 
   public void sendMessage(String message) {
-    log.info(String.format("#### -> Producing message -> %s", message));
     kafkaTemplate.send(topic, message);
   }
 }
