@@ -12,4 +12,6 @@ public class StockPriceDto {
 
   private String ticker;
   private BigDecimal price;
+  private int decimals;
+  private int lotSize;
 }
