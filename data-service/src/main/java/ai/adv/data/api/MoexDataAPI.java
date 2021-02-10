@@ -1,18 +1,17 @@
 package ai.adv.data.api;
 
 import ai.adv.data.dto.StockPriceDto;
-import java.util.ArrayList;
+import ai.adv.data.utils.xml.MoexXmlProcessor;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class MOEXDataAPI implements DataAPI {
+public class MoexDataAPI implements DataAPI {
 
   @Value("${api.moex.url.boards}")
   private String urlBoards;
@@ -27,15 +26,14 @@ public class MOEXDataAPI implements DataAPI {
   private String etfRub;
 
   private final HttpClientService httpClientService;
+  private final MoexXmlProcessor xmlProcessor;
 
   @Override
-  @Scheduled(cron = "${cron.refresh.stock-prices}")
   public List<StockPriceDto> getStockPrices() {
-    List<StockPriceDto> stockPrices = new ArrayList<>();
     String url = urlBoards + stockRub + urlParams;
 
     String responseBody = httpClientService.get(url);
 
-    return stockPrices;
+    return xmlProcessor.process(responseBody);
   }
 }

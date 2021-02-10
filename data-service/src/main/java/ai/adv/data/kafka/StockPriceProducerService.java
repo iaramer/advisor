@@ -1,9 +1,11 @@
 package ai.adv.data.kafka;
 
+import ai.adv.data.api.DataAPI;
 import ai.adv.data.dto.StockPriceDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.math.BigDecimal;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,12 +27,17 @@ public class StockPriceProducerService {
   private String topic;
 
   private final KafkaTemplate<String, StockPriceDto> kafkaTemplate;
+  private final DataAPI dataAPI;
 
   @Scheduled(cron = "${cron.refresh.stock-prices}")
-  public void testPublish() {
+  public void publishStockPrices() {
     log.info("Test publishing");
-    StockPriceDto stockPriceDto = new StockPriceDto("MAMO", BigDecimal.TEN);
+    StockPriceDto stockPriceDto = new StockPriceDto("MAMO", BigDecimal.TEN, 2, 1);
     publish(stockPriceDto);
+
+    dataAPI.getStockPrices().stream()
+        .filter(Objects::nonNull)
+        .forEach(this::publish);
   }
 
   public void publish(StockPriceDto stockPriceDto) {
