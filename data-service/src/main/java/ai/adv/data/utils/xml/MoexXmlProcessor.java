@@ -19,9 +19,8 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-public class MoexXmlProcessor implements XmlProcessor {
+public class MoexXmlProcessor {
 
-  @Override
   public List<StockPriceDto> process(String xmlBody) {
     List<StockPriceDto> stockPrices = new ArrayList<>();
     StockPriceDto stockPriceDto = null;
