@@ -26,7 +26,7 @@ public class MoexDataAPI implements DataAPI {
   private String etfRub;
 
   private final HttpClientService httpClientService;
-  private final MoexXmlProcessor xmlProcessor;
+  private final MoexXmlProcessor moexXmlProcessor;
 
   @Override
   public List<StockPriceDto> getStockPrices() {
@@ -34,6 +34,6 @@ public class MoexDataAPI implements DataAPI {
 
     String responseBody = httpClientService.get(url);
 
-    return xmlProcessor.process(responseBody);
+    return moexXmlProcessor.process(responseBody);
   }
 }
