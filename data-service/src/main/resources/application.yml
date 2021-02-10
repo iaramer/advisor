@@ -28,7 +28,7 @@ api:
   moex:
     url:
       boards: "https://iss.moex.com/iss/engines/stock/markets/shares/boards/"
-      params: "/securities.xml?iss.meta=off&iss.only=securities&securities.columns=SECID,PREVADMITTEDQUOTE,DECIMALS"
+      params: "/securities.xml?iss.meta=off&iss.only=securities&securities.columns=SECID,PREVADMITTEDQUOTE,DECIMALS,LOTSIZE"
     stock-rub: "TQBR"
     etf-usd: "TQTD"
     etf-rub: "TQTF"
