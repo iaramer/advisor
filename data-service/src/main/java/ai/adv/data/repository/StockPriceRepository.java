@@ -11,4 +11,8 @@ public class StockPriceRepository {
   public List<StockPriceDto> getStockPricesByTickers(List<String> tickers) {
     return Collections.emptyList();
   }
+
+  public List<StockPriceDto> saveStockPrices(List<StockPriceDto> stockPriceDtos) {
+    return Collections.emptyList();
+  }
 }

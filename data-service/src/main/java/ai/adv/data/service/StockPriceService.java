@@ -24,4 +24,8 @@ public class StockPriceService {
   public List<StockPriceDto> getStockPrices(StockPricesRequestDto stockPricesRequestDto) {
     return stockPriceRepository.getStockPricesByTickers(stockPricesRequestDto.getTickers());
   }
+
+  public List<StockPriceDto> saveStockPrices(List<StockPriceDto> stockPriceDtos) {
+    return stockPriceRepository.saveStockPrices(stockPriceDtos);
+  }
 }

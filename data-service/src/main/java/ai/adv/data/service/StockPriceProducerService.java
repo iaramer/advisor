@@ -1,4 +1,4 @@
-package ai.adv.data.kafka;
+package ai.adv.data.service;
 
 import ai.adv.data.api.DataAPI;
 import ai.adv.data.dto.StockPriceDto;
@@ -27,17 +27,12 @@ public class StockPriceProducerService {
   private String topic;
 
   private final KafkaTemplate<String, StockPriceDto> kafkaTemplate;
-  private final DataAPI dataAPI;
 
   @Scheduled(cron = "${cron.refresh.stock-prices}")
   public void publishStockPrices() {
     log.info("Test publishing");
     StockPriceDto stockPriceDto = new StockPriceDto("MAMO", BigDecimal.TEN, 2, 1);
     publish(stockPriceDto);
-
-    dataAPI.getStockPrices().stream()
-        .filter(Objects::nonNull)
-        .forEach(this::publish);
   }
 
   public void publish(StockPriceDto stockPriceDto) {
