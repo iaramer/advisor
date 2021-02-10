@@ -1,6 +1,6 @@
 package ai.adv.data.controller;
 
-import ai.adv.data.service.KafkaProducerService;
+import ai.adv.data.kafka.KafkaProducerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
