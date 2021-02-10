@@ -1,4 +1,4 @@
-package ai.adv.data.service;
+package ai.adv.data.kafka;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
