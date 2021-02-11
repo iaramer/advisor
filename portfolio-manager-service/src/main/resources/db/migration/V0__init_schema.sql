@@ -1,6 +1,6 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
-CREATE TABLE portfolios
+CREATE TABLE IF NOT EXISTS portfolios
 (
     uuid          UUID UNIQUE DEFAULT uuid_generate_v4(),
     name          VARCHAR(64) NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE portfolios
     PRIMARY KEY (uuid)
 );
 
-CREATE TABLE complex_positions
+CREATE TABLE IF NOT EXISTS complex_positions
 (
     uuid                         UUID UNIQUE DEFAULT uuid_generate_v4(),
     portfolio_uuid               UUID        NOT NULL,
@@ -21,7 +21,7 @@ CREATE TABLE complex_positions
     FOREIGN KEY (portfolio_uuid) REFERENCES portfolios (uuid)
 );
 
-CREATE TABLE client_simple_positions
+CREATE TABLE IF NOT EXISTS client_simple_positions
 (
     uuid                         UUID UNIQUE DEFAULT uuid_generate_v4(),
     portfolio_uuid               UUID       NOT NULL,
