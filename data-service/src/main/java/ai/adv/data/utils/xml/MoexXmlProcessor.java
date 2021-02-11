@@ -38,7 +38,9 @@ public class MoexXmlProcessor {
           EndElement endElement = xmlEvent.asEndElement();
           String localPart = endElement.getName().getLocalPart();
           Optional.ofNullable(stockPriceDto)
-              .filter(s -> localPart.equals("row"))
+              .filter(stockPrice -> localPart.equals("row"))
+              .filter(stockPrice -> stockPrice.getTicker() != null)
+              .filter(stockPrice -> stockPrice.getPrice() != null)
               .ifPresent(stockPrices::add);
         }
       }
@@ -68,13 +70,13 @@ public class MoexXmlProcessor {
           .map(startElement::getAttributeByName)
           .map(Attribute::getValue)
           .map(Integer::parseInt)
-          .ifPresent(stockPriceDto::setDecimals);
+          .ifPresentOrElse(stockPriceDto::setDecimals, () -> stockPriceDto.setDecimals(2));
 
       Optional.of(new QName("LOTSIZE"))
           .map(startElement::getAttributeByName)
           .map(Attribute::getValue)
           .map(Integer::parseInt)
-          .ifPresent(stockPriceDto::setLotSize);
+          .ifPresentOrElse(stockPriceDto::setLotSize, () -> stockPriceDto.setLotSize(1));
     }
     return stockPriceDto;
   }
