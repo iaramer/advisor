@@ -13,7 +13,7 @@
 
   <properties>
     <portfolio-management-lib.version>0.0.1-SNAPSHOT</portfolio-management-lib.version>
-    <data-service.version>0.0.1-SNAPSHOT</data-service.version>
+    <financial-data-service.version>0.0.1-SNAPSHOT</financial-data-service.version>
   </properties>
 
   <dependencies>
@@ -25,8 +25,8 @@
     </dependency>
     <dependency>
       <groupId>ai.adv</groupId>
-      <artifactId>data-service</artifactId>
-      <version>${data-service.version}</version>
+      <artifactId>financial-data-service</artifactId>
+      <version>${financial-data-service.version}</version>
     </dependency>
 
     <dependency>

@@ -1,6 +1,6 @@
 package ai.adv.portfoliomanager.kafka;
 
-import ai.adv.data.dto.StockPriceDto;
+import ai.adv.financialdata.dto.StockPriceDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
