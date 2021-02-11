@@ -4,6 +4,12 @@ server:
 spring:
   profiles:
     active: default
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/data
+    username: postgres
+    password: postgres
+    driverClassName: org.postgresql.Driver
   kafka:
     consumer:
       bootstrap-servers: localhost:9092

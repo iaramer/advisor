@@ -1,11 +1,9 @@
 package ai.adv.data.service;
 
-import ai.adv.data.api.DataAPI;
 import ai.adv.data.dto.StockPriceDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.math.BigDecimal;
-import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
