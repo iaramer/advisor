@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS stock_prices
     ticker       VARCHAR(64) NOT NULL,
     price        NUMERIC NOT NULL,
     decimals     INTEGER DEFAULT 2,
-    lotSize      INTEGER DEFAULT 1
+    lot_size      INTEGER DEFAULT 1
 
     PRIMARY KEY (uuid)
 );

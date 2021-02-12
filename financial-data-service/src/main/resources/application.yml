@@ -1,9 +1,7 @@
 server:
-  port: 8080
+  port: 8081
 
 spring:
-  profiles:
-    active: default
   datasource:
     platform: postgres
     url: jdbc:postgresql://localhost:5432/financial_data
