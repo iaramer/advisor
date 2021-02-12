@@ -5,9 +5,9 @@
     <packaging>pom</packaging>
     <modules>
         <module>mail-service</module>
-        <module>financial-data-service</module>
         <module>portfolio-manager-service</module>
         <module>portfolio-management-lib</module>
+        <module>financial-data-service</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -23,6 +23,9 @@
 
     <properties>
         <java.version>15</java.version>
+        <maven.compiler.source>15</maven.compiler.source>
+        <maven.compiler.target>15</maven.compiler.target>
+
         <lombok.version>1.18.16</lombok.version>
         <spring-kafka.version>2.5.0.RELEASE</spring-kafka.version>
         <flyway-core.version>6.5.3</flyway-core.version>
@@ -73,11 +76,19 @@
             <artifactId>mail</artifactId>
             <version>${mail.version}</version>
         </dependency>
+
+        <!-- Database -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+          <groupId>org.flywaydb</groupId>
+          <artifactId>flyway-core</artifactId>
+          <version>${flyway-core.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -89,6 +100,7 @@
             <artifactId>jsr305</artifactId>
             <version>${jsr305.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
