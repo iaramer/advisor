@@ -1,6 +1,7 @@
 package ai.adv.portfoliomanager.model;
 
 import ai.adv.portfoliomanager.model.position.Position;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -20,20 +21,12 @@ public class Portfolio {
   public static final String DEFAULT_BASE_CURRENCY = "USD";
 
   private String name;
-
   private boolean isModel;
-
   @Builder.Default
   private String baseCurrency = DEFAULT_BASE_CURRENCY;
-
   @Getter(AccessLevel.NONE)
   @Builder.Default
   private List<Position> positions = new ArrayList<>();
-
-  public static Portfolio empty() {
-    return Portfolio.builder()
-        .build();
-  }
 
   public List<Position> getPositions() {
     return positions.stream()
@@ -49,7 +42,8 @@ public class Portfolio {
         .collect(Collectors.toList());
   }
 
-  public Map<String, Integer> getSharesWithNumbers() {
+  //todo: obtain different scales
+  public Map<String, BigDecimal> getSharesWithNumbers() {
     return positions.stream()
         .map(Position::getSharesWithNumbers)
         .flatMap(position -> position.entrySet().stream())

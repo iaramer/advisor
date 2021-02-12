@@ -8,23 +8,18 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * Describes simple allocation, such as share or ETF. Could be a part of ComplexPosition.
- *
- * @See ComplexPosition
- */
 @Getter
 @Setter
 @Builder
-public class ClientSimplePosition implements Position {
+public class ClientCashPosition implements Position {
 
-  private static final PositionType POSITION_TYPE = PositionType.CLIENT_SIMPLE_POSITION;
+  private static final PositionType POSITION_TYPE = PositionType.CLIENT_CASH_POSITION;
 
   private String ticker;
-  private int size;
+  private BigDecimal size;
 
-  public void addSize(int additionalSize) {
-    size += additionalSize;
+  public void addSize(BigDecimal additionalSize) {
+    size = size.add(additionalSize);
   }
 
   @Override
@@ -39,7 +34,7 @@ public class ClientSimplePosition implements Position {
 
   @Override
   public Map<String, BigDecimal> getSharesWithNumbers() {
-    return Collections.singletonMap(ticker, BigDecimal.valueOf(size));
+    return Collections.singletonMap(ticker, size);
   }
 
   @Override
@@ -49,6 +44,6 @@ public class ClientSimplePosition implements Position {
 
   @Override
   public BigDecimal getPositionValue(BigDecimal price) {
-    return BigDecimal.valueOf(size).multiply(price);
+    return size;
   }
 }
