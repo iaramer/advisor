@@ -5,14 +5,15 @@
     <packaging>pom</packaging>
     <modules>
         <module>mail-service</module>
-        <module>data-service</module>
         <module>portfolio-manager-service</module>
+        <module>portfolio-management-lib</module>
+        <module>financial-data-service</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.3.1.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
     <groupId>ai.adv</groupId>
     <artifactId>advisor</artifactId>
@@ -21,7 +22,12 @@
     <description>Recommendation system</description>
 
     <properties>
-        <java.version>14</java.version>
+        <java.version>15</java.version>
+        <maven.compiler.source>15</maven.compiler.source>
+        <maven.compiler.target>15</maven.compiler.target>
+
+        <lombok.version>1.18.16</lombok.version>
+        <spring-kafka.version>2.5.0.RELEASE</spring-kafka.version>
         <flyway-core.version>6.5.3</flyway-core.version>
         <commons-lang3.version>3.11</commons-lang3.version>
         <mail.version>1.4.7</mail.version>
@@ -29,6 +35,8 @@
         <junit-jupiter-engine.version>5.6.2</junit-jupiter-engine.version>
         <mockito-core.version>3.4.6</mockito-core.version>
         <commons-collections4.version>4.4</commons-collections4.version>
+        <httpclient.version>4.5.13</httpclient.version>
+        <commons-io.version>2.8.0</commons-io.version>
     </properties>
 
     <dependencies>
@@ -45,7 +53,7 @@
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
-            <version>2.5.0.RELEASE</version>
+            <version>${spring-kafka.version}</version>
         </dependency>
 
         <!-- Tests -->
@@ -68,21 +76,31 @@
             <artifactId>mail</artifactId>
             <version>${mail.version}</version>
         </dependency>
+
+        <!-- Database -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
         <dependency>
+          <groupId>org.flywaydb</groupId>
+          <artifactId>flyway-core</artifactId>
+          <version>${flyway-core.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.google.code.findbugs</groupId>
             <artifactId>jsr305</artifactId>
             <version>${jsr305.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
@@ -93,6 +111,17 @@
             <artifactId>commons-collections4</artifactId>
             <version>${commons-collections4.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>${httpclient.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io.version}</version>
+        </dependency>
+
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -106,14 +135,5 @@
             </exclusions>
         </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>

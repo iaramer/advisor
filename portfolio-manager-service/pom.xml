@@ -11,7 +11,24 @@
 
   <artifactId>portfolio-manager-service</artifactId>
 
+  <properties>
+    <portfolio-management-lib.version>0.0.1-SNAPSHOT</portfolio-management-lib.version>
+    <financial-data-service.version>0.0.1-SNAPSHOT</financial-data-service.version>
+  </properties>
+
   <dependencies>
+    <dependency>
+      <groupId>ai.adv</groupId>
+      <artifactId>portfolio-management-lib</artifactId>
+      <version>${portfolio-management-lib.version}</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>ai.adv</groupId>
+      <artifactId>financial-data-service</artifactId>
+      <version>${financial-data-service.version}</version>
+    </dependency>
+
     <dependency>
       <groupId>org.flywaydb</groupId>
       <artifactId>flyway-core</artifactId>
@@ -21,29 +38,19 @@
       <artifactId>commons-lang3</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-collections4</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-core</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-collections4</artifactId>
-      <version>4.1</version>
-      <scope>compile</scope>
-    </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>

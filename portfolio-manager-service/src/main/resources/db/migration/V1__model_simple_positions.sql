@@ -7,7 +7,7 @@ CREATE TABLE model_simple_positions
     share                        NUMERIC,
 
     PRIMARY KEY (uuid),
-    CONSTRAINT check_size CHECK (share > 0 AND share < 1),
+    CONSTRAINT check_size CHECK (share > 0 AND share <= 1),
     FOREIGN KEY (portfolio_uuid) REFERENCES portfolios (uuid),
     FOREIGN KEY (parent_complex_position_uuid) REFERENCES complex_positions (uuid)
 );

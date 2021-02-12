@@ -1,7 +1,14 @@
+server:
+  port: 8080
+
 spring:
   datasource:
     platform: postgres
-    url: jdbc:postgresql://localhost:5433/portfolio_manager
+    url: jdbc:postgresql://localhost:5432/portfolio_manager
     username: postgres
     password: postgres
     driverClassName: org.postgresql.Driver
+
+kafka:
+  queues:
+    stock-prices: stock-prices

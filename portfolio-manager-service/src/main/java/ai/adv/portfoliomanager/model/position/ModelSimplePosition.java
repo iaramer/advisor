@@ -13,9 +13,23 @@ import lombok.Setter;
 @Builder
 public class ModelSimplePosition implements Position {
 
-  private String ticker;
+  private static final PositionType POSITION_TYPE = PositionType.MODEL_SIMPLE_POSITION;
 
+  private String ticker;
   private BigDecimal proportion;
+
+  public void addProportion(BigDecimal bigDecimal) {
+    BigDecimal newProportion = proportion.add(bigDecimal);
+    if (newProportion.compareTo(BigDecimal.ZERO) >= 0) {
+      throw new UnsupportedOperationException("A proportion of a position can't be higher than 100%");
+    }
+    proportion = newProportion;
+  }
+
+  @Override
+  public PositionType getPositionType() {
+    return POSITION_TYPE;
+  }
 
   @Override
   public List<String> getTickers() {
@@ -23,8 +37,13 @@ public class ModelSimplePosition implements Position {
   }
 
   @Override
-  public Map<String, Integer> getSharesWithNumbers() {
+  public Map<String, BigDecimal> getSharesWithNumbers() {
     throw new UnsupportedOperationException("Model portfolio can't have size");
+  }
+
+  @Override
+  public BigDecimal getPositionValue(BigDecimal price) {
+    throw new UnsupportedOperationException("Model portfolio can't have value");
   }
 
   @Override
