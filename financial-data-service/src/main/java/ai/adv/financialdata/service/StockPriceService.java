@@ -18,14 +18,14 @@ public class StockPriceService {
     return stockPriceRepository.getStockPricesByTickers(Collections.singletonList(ticker))
         .stream()
         .findAny()
-        .orElse(null);
+        .orElseThrow(() -> new RuntimeException("Price not found by ticker provided"));
   }
 
   public List<StockPriceDto> getStockPrices(StockPricesRequestDto stockPricesRequestDto) {
     return stockPriceRepository.getStockPricesByTickers(stockPricesRequestDto.getTickers());
   }
 
-  public List<StockPriceDto> saveStockPrices(List<StockPriceDto> stockPriceDtos) {
-    return stockPriceRepository.saveStockPrices(stockPriceDtos);
+  public void saveStockPrices(List<StockPriceDto> stockPriceDtos) {
+    stockPriceRepository.saveStockPrices(stockPriceDtos);
   }
 }

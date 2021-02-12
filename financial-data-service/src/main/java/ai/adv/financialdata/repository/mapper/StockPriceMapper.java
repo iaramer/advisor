@@ -5,12 +5,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;
 
-public class StockPriceMapper implements RowMapper {
+public class StockPriceMapper implements RowMapper<StockPriceDto> {
 
   @Override
   public StockPriceDto mapRow(ResultSet rs, int rowNum) throws SQLException {
     return StockPriceDto.builder()
         .ticker(rs.getString("ticker"))
+        .exchange(rs.getString("exchange"))
         .price(rs.getBigDecimal("price"))
         .decimals(rs.getInt("decimals"))
         .lotSize(rs.getInt("lot_size"))

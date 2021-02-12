@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 public class StockPriceDto {
 
   private String ticker;
+  private String exchange;
   private BigDecimal price;
   private int decimals;
   private int lotSize;

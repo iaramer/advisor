@@ -15,11 +15,14 @@ import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
 public class MoexXmlProcessor {
+
+  private static final String MOEX = "MOEX";
 
   public List<StockPriceDto> process(String xmlBody) {
     List<StockPriceDto> stockPrices = new ArrayList<>();
@@ -53,28 +56,34 @@ public class MoexXmlProcessor {
 
   private StockPriceDto extractStockPrices(XMLEvent xmlEvent) {
     StockPriceDto stockPriceDto = new StockPriceDto();
+    stockPriceDto.setExchange(MOEX);
+
     StartElement startElement = xmlEvent.asStartElement();
     if (startElement.getName().getLocalPart().equals("row")) {
       Optional.of(new QName("SECID"))
           .map(startElement::getAttributeByName)
           .map(Attribute::getValue)
+          .filter(StringUtils::isNotBlank)
           .ifPresent(stockPriceDto::setTicker);
 
       Optional.of(new QName("PREVADMITTEDQUOTE"))
           .map(startElement::getAttributeByName)
           .map(Attribute::getValue)
+          .filter(StringUtils::isNotBlank)
           .map(BigDecimal::new)
           .ifPresent(stockPriceDto::setPrice);
 
       Optional.of(new QName("DECIMALS"))
           .map(startElement::getAttributeByName)
           .map(Attribute::getValue)
+          .filter(StringUtils::isNotBlank)
           .map(Integer::parseInt)
           .ifPresentOrElse(stockPriceDto::setDecimals, () -> stockPriceDto.setDecimals(2));
 
       Optional.of(new QName("LOTSIZE"))
           .map(startElement::getAttributeByName)
           .map(Attribute::getValue)
+          .filter(StringUtils::isNotBlank)
           .map(Integer::parseInt)
           .ifPresentOrElse(stockPriceDto::setLotSize, () -> stockPriceDto.setLotSize(1));
     }
