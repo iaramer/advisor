@@ -29,7 +29,13 @@ public class StockPriceProducerService {
   @Scheduled(cron = "${cron.refresh.stock-prices}")
   public void publishStockPrices() {
     log.info("Test publishing");
-    StockPriceDto stockPriceDto = new StockPriceDto("MAMO", BigDecimal.TEN, 2, 1);
+    StockPriceDto stockPriceDto = StockPriceDto.builder()
+        .ticker("MAMO")
+        .exchange("AMER")
+        .price(BigDecimal.TEN)
+        .decimals(2)
+        .lotSize(1)
+        .build();
     publish(stockPriceDto);
   }
 
