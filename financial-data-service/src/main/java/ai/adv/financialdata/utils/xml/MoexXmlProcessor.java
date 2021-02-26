@@ -66,7 +66,7 @@ public class MoexXmlProcessor {
           .filter(StringUtils::isNotBlank)
           .ifPresent(stockPriceDto::setTicker);
 
-      Optional.of(new QName("PREVADMITTEDQUOTE"))
+      Optional.of(new QName("PREVPRICE"))
           .map(startElement::getAttributeByName)
           .map(Attribute::getValue)
           .filter(StringUtils::isNotBlank)

@@ -13,18 +13,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/stock-prices")
+@RequestMapping(value = "/stock-prices/get")
 @RequiredArgsConstructor
 public class StockPriceController {
 
   private final StockPriceService stockPriceService;
 
-  @GetMapping(value = "/get/{ticker}")
+  @GetMapping(value = "/{ticker}")
   public StockPriceDto getStockPrice(@PathVariable String ticker) {
     return stockPriceService.getStockPrice(ticker);
   }
 
-  @PostMapping(value = "/get")
+  @PostMapping(value = "/list")
   public List<StockPriceDto> getStockPrices(@RequestBody StockPricesRequestDto stockPricesRequestDto) {
     return stockPriceService.getStockPrices(stockPricesRequestDto);
   }
