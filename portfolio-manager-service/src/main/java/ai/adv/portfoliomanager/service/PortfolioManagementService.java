@@ -1,7 +1,6 @@
 package ai.adv.portfoliomanager.service;
 
 import ai.adv.portfoliomanager.dto.ModelPortfolioDto;
-import ai.adv.portfoliomanager.service.data.DataService;
 import balancing.Balancer;
 import java.math.BigDecimal;
 import java.util.ArrayList;

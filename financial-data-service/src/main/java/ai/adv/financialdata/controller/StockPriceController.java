@@ -19,13 +19,14 @@ public class StockPriceController {
 
   private final StockPriceService stockPriceService;
 
-  @GetMapping(value = "/get/{ticker}")
+  @GetMapping(value = "/{ticker}")
   public StockPriceDto getStockPrice(@PathVariable String ticker) {
     return stockPriceService.getStockPrice(ticker);
   }
 
-  @PostMapping(value = "/get")
-  public List<StockPriceDto> getStockPrices(@RequestBody StockPricesRequestDto stockPricesRequestDto) {
+  @PostMapping(value = "/list")
+  public List<StockPriceDto> getStockPrices(
+      @RequestBody StockPricesRequestDto stockPricesRequestDto) {
     return stockPriceService.getStockPrices(stockPricesRequestDto);
   }
 }

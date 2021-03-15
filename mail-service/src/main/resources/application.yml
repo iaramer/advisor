@@ -2,6 +2,8 @@ server:
   port: 8081
 
 spring:
+  application:
+    name: mail-service
   profiles:
     active: default
   kafka:
@@ -17,7 +19,7 @@ spring:
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
 mail-service:
-  active: true # todo: add functionality to turn off messaging
+  active: true # todo: add functionality to turn off messaging depending on profile
   email:
     address: ${MAIL_SERVICE_EMAIL_ADDRESS}
     password: ${MAIL_SERVICE_EMAIL_PASSWORD}

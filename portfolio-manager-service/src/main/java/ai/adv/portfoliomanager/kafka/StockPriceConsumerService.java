@@ -1,8 +1,8 @@
 package ai.adv.portfoliomanager.kafka;
 
 import ai.adv.financialdata.dto.StockPriceDto;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -20,7 +20,7 @@ public class StockPriceConsumerService {
     try {
       ObjectMapper objectMapper = new ObjectMapper();
       StockPriceDto stockPriceDto = objectMapper.readValue(message, StockPriceDto.class);
-    } catch (JsonProcessingException e) {
+    } catch (IOException e) {
       log.error(e.getMessage());
     }
   }

@@ -1,20 +1,23 @@
 # financial-data-service
 
-Сервис автоматически подтягивает данные из внешних источников и хранит их у себя.
-Какие данные хранятся:
-* Цены бумаг с MOEX, NYSE
-* Финансовые отчеты (можно подтягивать с Edgar)
+Service automatically gets data from open APIs. Sources:
 
-## Архитектура
+* MOEX
 
-Способы взаимодействия с сервисом:
-Так как цены необходимы как можно более "свежие", предоставлен API.
-Для данных, которые дольше остаются "свежими" (например, отчеты), есть возможность интеграции с Kafka.
+WIP:
+
+* NYSE, NASDAQ
+* Financial statements (EDGAR)
+
+## Architecture
+
+Integration with other sources:
+There's an API provided to obtain the latest prices.
 
 ### Kafka
 
-Есть интеграция с Kafka. При необходимости, возможно добавить рассылку хранимых в сервисе данных.
+For other purposes (e.g., financial statements) there's an opportunity for integration with Kafka.
 
 ### PostreSQL
 
-Все данные записываются и хранятся в БД.
+All data is stored in a database.
