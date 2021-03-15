@@ -12,8 +12,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Describes combined position, such as country allocation or sector allocation. May contain both complex and single
- * positions.
+ * Describes combined position, such as country allocation or sector allocation. May contain both
+ * complex and single positions.
  */
 @Getter
 @Setter
@@ -47,7 +47,8 @@ public class ComplexPosition implements Position {
     return positions.stream()
         .map(Position::getSharesWithNumbers)
         .flatMap(position -> position.entrySet().stream())
-        .collect(Collectors.toMap(Entry::getKey, Entry::getValue)); // fixme: there is an issue in case there are positions with similar tickets
+        .collect(Collectors.toMap(Entry::getKey,
+            Entry::getValue)); // fixme: there is an issue in case there are positions with similar tickets
   }
 
   public void addPosition(Position position) {

@@ -23,10 +23,10 @@ public class StockPriceRepository {
 
   public List<StockPriceDto> getStockPricesByTickers(List<String> tickers) {
     String rowQuery = """
-    SELECT ticker, exchange, price, decimals, lot_size 
-    FROM stock_prices 
-    WHERE ticker IN (%s) 
-    """;
+        SELECT ticker, exchange, price, decimals, lot_size 
+        FROM stock_prices 
+        WHERE ticker IN (%s) 
+        """;
     String inSql = String.join(",", Collections.nCopies(tickers.size(), "?"));
     String sqlQuery = String.format(rowQuery, inSql);
 
@@ -35,12 +35,12 @@ public class StockPriceRepository {
 
   public void saveStockPrices(List<StockPriceDto> stockPriceDtos) {
     String sqlQuery = """
-    INSERT INTO stock_prices(ticker, exchange, price, decimals, lot_size)
-    VALUES (?,?,?,?,?)
-    ON CONFLICT (ticker, exchange) 
-    DO 
-    UPDATE SET price=?, decimals=?, lot_size=?
-    """;
+        INSERT INTO stock_prices(ticker, exchange, price, decimals, lot_size)
+        VALUES (?,?,?,?,?)
+        ON CONFLICT (ticker, exchange) 
+        DO 
+        UPDATE SET price=?, decimals=?, lot_size=?
+        """;
     List<Object[]> parameters = stockPriceDtos.stream()
         .map(this::mapToObjectArray)
         .collect(Collectors.toList());
@@ -55,6 +55,6 @@ public class StockPriceRepository {
     int decimals = stockPriceDto.getDecimals();
     int lotSize = stockPriceDto.getLotSize();
 
-    return new Object[] {ticker, exchange, price, decimals, lotSize, price, decimals, lotSize};
+    return new Object[]{ticker, exchange, price, decimals, lotSize, price, decimals, lotSize};
   }
 }
