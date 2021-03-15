@@ -1,5 +1,6 @@
 package balancing;
 
+import balancing.exception.TickerNotFoundException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.AbstractMap;
@@ -92,7 +93,7 @@ public class Balancer {
     prices.put(baseCurrencyTicker, BigDecimal.ONE);
     for (Entry<String, BigDecimal> entry : modelPortfolio.entrySet()) {
       Optional.ofNullable(prices.get(entry.getKey()))
-          .orElseThrow(IllegalArgumentException::new);
+          .orElseThrow(() -> new TickerNotFoundException(entry.getKey()));
     }
   }
 
