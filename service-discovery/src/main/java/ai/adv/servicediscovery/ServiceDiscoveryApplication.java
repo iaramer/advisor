@@ -1,15 +1,14 @@
-package ai.adv.mail;
+package ai.adv.servicediscovery;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 
-@EnableEurekaClient
+@EnableEurekaServer
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
-public class MailServiceApplication {
-
+public class ServiceDiscoveryApplication {
   public static void main(String[] args) {
-    SpringApplication.run(MailServiceApplication.class);
+    SpringApplication.run(ServiceDiscoveryApplication.class, args);
   }
 }

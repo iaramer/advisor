@@ -2,6 +2,8 @@ server:
   port: 8081
 
 spring:
+  application:
+    name: financial-data-service
   datasource:
     platform: postgres
     url: jdbc:postgresql://localhost:5432/financial_data
