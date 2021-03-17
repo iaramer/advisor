@@ -2,7 +2,6 @@ package ai.adv.financialdata.kafka;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
@@ -11,12 +10,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class KafkaProducerService {
 
-  @Value("${kafka.queues.stock-prices}")
-  private String topic;
+  private static final String TOPIC = "email-messages";
 
   private final KafkaTemplate<String, String> kafkaTemplate;
 
   public void sendMessage(String message) {
-    kafkaTemplate.send(topic, message);
+    kafkaTemplate.send(TOPIC, message);
   }
 }

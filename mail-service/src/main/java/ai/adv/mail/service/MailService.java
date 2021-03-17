@@ -22,6 +22,8 @@ public class MailService {
   private static final String TEMPLATE_MESSAGE = "Hello,\n\nThere's a new message for you:\n%s";
   private static final String MESSAGE_SUBJECT = "Advisor service Info";
 
+  @Value("${mail-service.active:false}")
+  private boolean isActive;
   @Value("${mail-service.email.address}")
   private String mailServiceEmailAddress;
   @Value("${mail-service.email.password}")
@@ -30,6 +32,14 @@ public class MailService {
   private String to;
 
   public void sendEmailMessage(String emailMessage) {
+    if (isActive) {
+      sendMessage(emailMessage);
+    } else {
+      log.info("Sending messages turned off. The message is \"{}\"", emailMessage);
+    }
+  }
+
+  private void sendMessage(String emailMessage) {
     Properties properties = getProperties();
     Session session = getSession(properties);
 
