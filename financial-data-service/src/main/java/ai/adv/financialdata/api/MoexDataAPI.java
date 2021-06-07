@@ -2,6 +2,7 @@ package ai.adv.financialdata.api;
 
 import ai.adv.financialdata.dto.StockPriceDto;
 import ai.adv.financialdata.utils.xml.MoexXmlProcessor;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +31,14 @@ public class MoexDataAPI implements DataAPI {
 
   @Override
   public List<StockPriceDto> getStockPrices() {
-    String url = urlBoards + stockRub + urlParams;
+    List<StockPriceDto> stockPriceDtos = new ArrayList<>();
+    stockPriceDtos.addAll(getPrices(stockRub));
+    stockPriceDtos.addAll(getPrices(etfRub));
+    return stockPriceDtos;
+  }
+
+  public List<StockPriceDto> getPrices(String instrument) {
+    String url = urlBoards + instrument + urlParams;
 
     String responseBody = httpClientService.get(url);
 
