@@ -33,7 +33,7 @@
     </spring-cloud-starter-netflix-eureka-client.version>
     <spring-cloud-starter-netflix-eureka-server.version>2.1.6.RELEASE
     </spring-cloud-starter-netflix-eureka-server.version>
-    <lombok.version>1.18.16</lombok.version>
+    <lombok.version>1.18.20</lombok.version>
     <flyway-core.version>6.5.3</flyway-core.version>
     <commons-lang3.version>3.11</commons-lang3.version>
     <mail.version>1.4.7</mail.version>
